@@ -35,6 +35,10 @@ export class HomeScreen extends React.Component {
   onLoginPress = () => {
     const { AppStore, navigation } = this.props;
 
+    if (!this.username || !this.password) {
+      return;
+    }
+
     if (this.shouldRememberMe) {
       Storage.updateUserCredentials(this.username, this.password);
     }

@@ -18,7 +18,7 @@ export class MenuScreen extends React.Component {
   };
 
   onApplicationsPress = () => {
-
+    
   }
 
   onSignOutPress = () => {

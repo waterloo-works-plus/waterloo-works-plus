@@ -8,7 +8,10 @@ class AppStore {
   @action login = (newUsername, newPassword, cb) => {
     this.username = newUsername;
     this.password = newPassword;
-    this.isSignedIn = true;
+
+    if (this.username && this.password) {
+      this.isSignedIn = true;
+    }
 
     if (cb) {
       cb();
