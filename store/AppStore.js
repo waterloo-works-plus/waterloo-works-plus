@@ -2,10 +2,10 @@ import { observable, action } from 'mobx';
 
 class AppStore {
   @observable isSignedIn = false;
-  @observable userEmail = "munaz@google.com";
+  @observable userName = '';
   
-  @action updateEmail = (newEmail) => {
-    this.userEmail = newEmail;
+  @action updateUserName = (newUserName) => {
+    this.userName = newUserName;
   }
 }
 

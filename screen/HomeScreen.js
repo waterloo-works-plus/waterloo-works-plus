@@ -2,14 +2,15 @@ import React from 'react';
 import { TouchableHighlight, Dimensions, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react/native'
 
 import Colors from '../style/Color.js'
 
+@inject('AppStore')
 @observer
 export class HomeScreen extends React.Component {
   @observable shouldRememberMe = false;
-  @observable userEmail = '';
+  @observable userName = '';
   @observable userPassword = '';
 
   static navigationOptions = {
@@ -28,16 +29,17 @@ export class HomeScreen extends React.Component {
           <TextInput
             style={styles.textInput}
             autoCorrect={false}
-            placeholder={'Email'}
-            onValueChange={value => this.userEmail = value}
-            value={this.userEmail}
+            placeholder={'Username'}
+            onChangeText={value => this.userName = value}
+            value={this.userName}
+            autoCapitalize={'none'}
           />
           <TextInput
             style={styles.textInput}
             autoCorrect={false}
             placeholder={'Password'}
             secureTextEntry
-            onValueChange={value => this.userPassword = value}
+            onChangeText={value => this.userPassword = value}
             value={this.userPassword}
           />
           <View style={styles.rememberMeContainer}>
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     width: deviceWidth - 30,
     height: 40,
     borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.veryDarkGrey,
     padding: 5,
     fontSize: 18,
   },

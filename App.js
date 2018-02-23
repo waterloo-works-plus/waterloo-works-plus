@@ -1,10 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { Provider } from 'mobx-react/native';
 
-import appStore from './store/AppStore.js';
+import AppStore from './store/AppStore.js';
 
 import { HomeScreen } from './screen/HomeScreen';
+
+const stores = { AppStore  };
 
 const RootStack = StackNavigator({
   Home: {
@@ -15,7 +18,9 @@ const RootStack = StackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <RootStack />
+      <Provider {...stores}>
+        <RootStack />
+      </Provider>
     );
   }
 }
