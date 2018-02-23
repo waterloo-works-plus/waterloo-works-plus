@@ -1,51 +1,86 @@
 import React from 'react';
-import { TouchableHighlight, Dimensions, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Dimensions, StyleSheet, Switch, Text, 
+  TextInput, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 
+import { Storage } from '../data/Storage';
 import Colors from '../style/Color.js'
 
 @inject('AppStore')
 @observer
 export class HomeScreen extends React.Component {
   @observable shouldRememberMe = false;
-  @observable userName = '';
-  @observable userPassword = '';
+  @observable username = '';
+  @observable password = '';
+  @observable isLoggingIn = false;
 
   static navigationOptions = {
     title: 'Login',
+    headerLeft: null,
   };
 
-  onLoginPress = () => {
+  componentWillMount() {
+    const { AppStore } = this.props;
 
+    this.username = AppStore.username;
+    this.password = AppStore.password;
+
+    if (this.username && this.password) {
+      this.shouldRememberMe = true;
+    }
+  }
+
+  onLoginPress = () => {
+    const { AppStore, navigation } = this.props;
+
+    if (this.shouldRememberMe) {
+      Storage.updateUserCredentials(this.username, this.password);
+    }
+
+    this.isLoggingIn = true;
+
+    AppStore.login(this.username, this.password, () => {
+      this.isLoggingIn = false;
+      navigation.push('Menu');
+    });
   }
 
   render() {
     return (
       <SafeAreaView style={styles.root}>
-        <View style={styles.root}>
+        {
+          this.isLoggingIn &&
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
+          </View>
+        }
+        <View style={styles.main}>
           <Text style={styles.title}>Waterloo Works Mobile</Text>
           <TextInput
             style={styles.textInput}
             autoCorrect={false}
             placeholder={'Username'}
-            onChangeText={value => this.userName = value}
-            value={this.userName}
+            onChangeText={value => this.username = value}
+            value={this.username}
             autoCapitalize={'none'}
+            editable={!this.isLoggingIn}
           />
           <TextInput
             style={styles.textInput}
             autoCorrect={false}
             placeholder={'Password'}
             secureTextEntry
-            onChangeText={value => this.userPassword = value}
-            value={this.userPassword}
+            onChangeText={value => this.password = value}
+            value={this.password}
+            editable={!this.isLoggingIn}
           />
           <View style={styles.rememberMeContainer}>
             <Switch
               value={this.shouldRememberMe}
               onValueChange={value => this.shouldRememberMe = value}
+              disabled={this.isLoggingIn}
             />
             <Text
               style={[styles.rememberMeText, { color: this.shouldRememberMe ? Colors.veryDarkGrey : Colors.grey }]}
@@ -57,6 +92,7 @@ export class HomeScreen extends React.Component {
             style={styles.loginButton}
             onPress={this.onLoginPress}
             underlayColor={Colors.lightBlue}
+            disabled={this.isLoggingIn}
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableHighlight>
@@ -71,13 +107,13 @@ export class HomeScreen extends React.Component {
   }
 }
 
-const { width: deviceWidth } = Dimensions.get('window');
+const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   root: {
     paddingTop: 20,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -89,7 +125,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-    color: Colors.veryDarkBlue,
+    color: Colors.blue,
   },
   footerText: {
     color: Colors.grey,
@@ -125,5 +161,12 @@ const styles = StyleSheet.create({
   loginText: {
     color: Colors.white,
     fontSize: 24,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    width: deviceWidth,
+    height: deviceHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

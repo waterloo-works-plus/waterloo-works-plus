@@ -2,10 +2,23 @@ import { observable, action } from 'mobx';
 
 class AppStore {
   @observable isSignedIn = false;
-  @observable userName = '';
+  @observable username = '';
+  @observable password = '';
   
-  @action updateUserName = (newUserName) => {
-    this.userName = newUserName;
+  @action login = (newUsername, newPassword, cb) => {
+    this.username = newUsername;
+    this.password = newPassword;
+    this.isSignedIn = true;
+
+    if (cb) {
+      cb();
+    }
+  }
+
+  @action logout = () => {
+    this.isSignedIn = false;
+    this.username = '';
+    this.password = '';
   }
 }
 
