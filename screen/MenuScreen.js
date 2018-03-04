@@ -18,7 +18,9 @@ export class MenuScreen extends React.Component {
   };
 
   onApplicationsPress = () => {
+    const { navigation } = this.props;
 
+    navigation.push('TermSelect');
   }
 
   onSignOutPress = () => {
@@ -59,7 +61,7 @@ export class MenuScreen extends React.Component {
             <Text style={styles.buttonText}>About</Text>
           </TouchableHighlight>
         </ScrollView>
-        <View style={styles.footer}>
+        <View>
           <Text style={styles.footerText}>
             Not affilliated with the University of Waterloo
           </Text>
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 75,
-    paddingVertical: 25,
+    justifyContent: 'center',
     width: deviceWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,

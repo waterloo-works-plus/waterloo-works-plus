@@ -12,6 +12,8 @@ import { Storage } from './data/Storage.js';
 
 import { HomeScreen } from './screen/HomeScreen';
 import { MenuScreen } from './screen/MenuScreen';
+import { TermSelectScreen } from './screen/TermSelectScreen';
+import { ApplicationsScreen } from './screen/ApplicationsScreen';
 
 const stores = { AppStore };
 
@@ -49,9 +51,14 @@ export default class App extends React.Component {
       },
       Menu: {
         screen: MenuScreen,
-      }
+      },
+      TermSelect: {
+        screen: TermSelectScreen,
+      },
+      Applications: {
+        screen: ApplicationsScreen,
+      },
     }, {
-      mode: 'modal',
       headerMode: 'float',
       initialRouteName: initialRouteName
     });
