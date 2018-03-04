@@ -6,8 +6,7 @@ import { inject, observer } from 'mobx-react/native'
 
 import { Storage } from '../data/Storage.js';
 
-import Colors from '../style/Color.js'
-import appStore from '../store/AppStore.js';
+import Colors from '../style/Color.js';
 
 @inject('AppStore')
 @observer
@@ -92,12 +91,12 @@ const styles = StyleSheet.create({
     width: deviceWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.veryLightBlue,
+    backgroundColor: Colors.blue,
   },
   buttonText: {
     fontSize: 24,
     marginLeft: 20,
-    color: Colors.veryDarkBlue,
+    color: Colors.white,
   },
   footerText: {
     marginTop: 10,

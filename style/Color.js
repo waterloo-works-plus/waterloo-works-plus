@@ -19,7 +19,7 @@ export default Colors = {
   grey: '#9E9E9E',
   veryDarkGrey: '#212121',
   red: '#F44336',
-  lightGreen: '##81C784',
+  lightGreen: '#81C784',
   green: '#4CAF50',
   darkGreen: '#388E3C',
   veryDarkGreen: '#1B5E20',

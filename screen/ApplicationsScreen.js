@@ -1,19 +1,20 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, FlatList, StyleSheet, 
+import { ActivityIndicator, Dimensions, FlatList, Modal, StyleSheet, 
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 import _ from 'lodash';
 
-import { Storage } from '../data/Storage.js';
+import Colors from '../style/Color.js';
 
-import Colors from '../style/Color.js'
-import appStore from '../store/AppStore.js';
+import { SortApplicationsByModal } from './SortApplicationsByModal.js';
 
 @inject('AppStore')
 @observer
 export class ApplicationsScreen extends React.Component {
+  @observable isSortByModalVisible = false;
+  @observable sortByTitle = 'Job Status';
   @observable sortBy = 'jobStatus';
 
   static navigationOptions = ({ navigation }) => {
@@ -28,12 +29,23 @@ export class ApplicationsScreen extends React.Component {
     
   }
 
+  onSortByPress = () => {
+    this.isSortByModalVisible = true;
+  }
+
+  onSortChange = (sort) => {
+    this.sortByTitle = sort.title;
+    this.sortBy = sort.value;
+
+    this.isSortByModalVisible = false;
+  }
+
   render() {
     const { AppStore, navigation } = this.props;
     const { params } = navigation.state;
     const { term } = params;
 
-    const applications = _.values(AppStore.applications[term]);
+    const applications = _.sortBy(_.values(AppStore.applications[term]), this.sortBy);
 
     if (AppStore.isLoadingApplications) {
       return (
@@ -53,6 +65,20 @@ export class ApplicationsScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.root}>
+        <SortApplicationsByModal
+          isVisible={this.isSortByModalVisible}
+          onCancel={() => this.isSortByModalVisible = false}
+          onSortByPress={this.onSortChange}
+        />
+        <TouchableHighlight
+          onPress={this.onSortByPress}
+          underlayColor={Colors.lightBlue}
+        >
+          <View style={styles.sortByContainer}>
+            <Text style={styles.sortByText}>Sort by: </Text>
+            <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>{this.sortByTitle}</Text>
+          </View>
+        </TouchableHighlight>
         <FlatList
           style={styles.list}
           data={applications}
@@ -64,6 +90,10 @@ export class ApplicationsScreen extends React.Component {
 
             if (application.appStatus === 'Employed') {
               backgroundColor = Colors.green;
+            } else if (application.appStatus === 'Selected for Interview') {
+              backgroundColor = Colors.lightGreen;
+            } else if (application.appStatus === 'Not Selected') {
+              backgroundColor = Colors.yellow;
             } else if (application.jobStatus === 'Filled') {
               backgroundColor = Colors.lightGrey;
             } else if (application.jobStatus === 'Cancel') {
@@ -105,16 +135,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  main: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
-    flex: 1,
-  },
   noAppsText: {
     fontSize: 18,
     marginTop: 20,
     color: Colors.veryDarkBlue,
+  },
+  sortByContainer: {
+    paddingVertical: 10,
+    paddingLeft: 10,
+    backgroundColor: Colors.blue,
+    width: deviceWidth,
+    flexDirection: 'row',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.veryDarkBlue,
+  },
+  sortByText: {
+    color: Colors.white,
+    fontSize: 18,
   },
   list: {
     flex: 1
