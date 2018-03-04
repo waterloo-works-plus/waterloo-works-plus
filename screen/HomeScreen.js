@@ -15,6 +15,7 @@ export class HomeScreen extends React.Component {
   @observable username = '';
   @observable password = '';
   @observable isLoggingIn = false;
+  @observable showLoginFailedMessage = false;
 
   static navigationOptions = {
     title: 'Login',
@@ -46,8 +47,14 @@ export class HomeScreen extends React.Component {
     this.isLoggingIn = true;
 
     AppStore.login(this.username, this.password, () => {
+      // Login successful
       this.isLoggingIn = false;
+      this.showLoginFailedMessage = false;
       navigation.push('Menu');
+    }, (error) => {
+      // Login failed
+      this.isLoggingIn = false;
+      this.showLoginFailedMessage = true;
     });
   }
 
@@ -100,6 +107,12 @@ export class HomeScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableHighlight>
+          {
+            this.showLoginFailedMessage &&
+            <Text style={styles.loginFailed}>
+              Login failed
+            </Text>
+          }
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -172,5 +185,11 @@ const styles = StyleSheet.create({
     height: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loginFailed: {
+    color: Colors.red,
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 15,
   }
 });

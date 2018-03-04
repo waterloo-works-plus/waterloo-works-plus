@@ -18,7 +18,7 @@ export class MenuScreen extends React.Component {
   };
 
   onApplicationsPress = () => {
-    
+
   }
 
   onSignOutPress = () => {
@@ -39,21 +39,21 @@ export class MenuScreen extends React.Component {
         <ScrollView style={styles.main}>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={Colors.lightGrey}
+            underlayColor={Colors.lightBlue}
             onPress={this.onApplicationsPress}
           >
             <Text style={styles.buttonText}>Applications</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={Colors.lightGrey}
+            underlayColor={Colors.lightBlue}
             onPress={this.onSignOutPress}
           >
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={Colors.lightGrey}
+            underlayColor={Colors.lightBlue}
             onPress={this.onAboutPress}
           >
             <Text style={styles.buttonText}>About</Text>
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     width: deviceWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.veryLightGrey,
+    backgroundColor: Colors.veryLightBlue,
   },
   buttonText: {
     fontSize: 24,
     marginLeft: 20,
-    color: Colors.veryDarkGrey,
+    color: Colors.veryDarkBlue,
   },
   footerText: {
     marginTop: 10,

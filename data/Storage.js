@@ -13,7 +13,7 @@ export class Storage {
         [StorageKeys.username, username],
         [StorageKeys.password, password]
       ],
-      (errors) => {
+      errors => {
         if (errors) {
           console.warn('Error updating user credentials', errors);
           err && err(errors);
@@ -34,19 +34,19 @@ export class Storage {
           return cb(data[0][1], data[1][1]);
         }
       }
-    )
+    );
   }
 
   static clearUserCredentials(err) {
     AsyncStorage.multiRemove(
       [StorageKeys.username, StorageKeys.password],
-      (errors) => {
+      errors => {
         if (errors) {
           console.warn('Error removing user credentials');
           err && error(errors);
         }
       }
-    )
+    );
   }
 
 }

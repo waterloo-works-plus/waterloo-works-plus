@@ -19,19 +19,26 @@ const stores = { AppStore };
 export default class App extends React.Component {
   @observable isReady = false;
 
-  componentWillMount() {
+  componentDidMount() {
     Storage.getUserCredentials(() => {
       this.isReady = true;
     }, (username, password) => {
-      AppStore.login(username, password, () => {
+      if (!username || !password) {
         this.isReady = true;
-      });
+      } else {
+        AppStore.login(username, password, () => {
+          this.isReady = true;
+        }, (error) => {
+          console.warn(error);
+          this.isReady = true;
+        });
+      }
     })
   }
 
   render() {
     if (!this.isReady) {
-      <AppLoading />
+      return <AppLoading />
     }
 
     let initialRouteName = AppStore.isSignedIn ? 'Menu' : 'Home';
