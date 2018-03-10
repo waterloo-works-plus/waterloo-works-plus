@@ -12,7 +12,7 @@ import Colors from '../style/Color.js';
 @observer
 export class MenuScreen extends React.Component {
   static navigationOptions = {
-    title: 'Waterloo Works Mobile',
+    title: 'Waterloo Works Plus',
     headerLeft: null,
   };
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   footerText: {
-    marginTop: 10,
+    marginVertical: 10,
     color: Colors.grey,
   },
 });

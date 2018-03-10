@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, FlatList, Modal, StyleSheet, 
+import { ActivityIndicator, Dimensions, FlatList, StyleSheet, 
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
@@ -25,8 +25,19 @@ export class ApplicationsScreen extends React.Component {
     };
   };
 
-  onJobPress = (jobId) => {
+  onApplicationPress = (application, term) => {
+    const { AppStore, navigation } = this.props;
+
+    const jobId = application.jobId;
+    if (!AppStore.jobs.get(jobId) &&
+      !AppStore.isLoadingJob.get(jobId)) {
+      AppStore.getJob(application.jobId, term);
+    }
     
+    navigation.push('Job', { 
+      jobId: application.jobId,
+      title: application.company
+    });
   }
 
   onSortByPress = () => {
@@ -45,9 +56,10 @@ export class ApplicationsScreen extends React.Component {
     const { params } = navigation.state;
     const { term } = params;
 
-    const applications = _.sortBy(_.values(AppStore.applications[term]), this.sortBy);
+    const applications = _.sortBy(_.values(AppStore.applications.get(term)), this.sortBy);
+    const isLoadingApplications = AppStore.isLoadingApplications.get(term);
 
-    if (AppStore.isLoadingApplications) {
+    if (isLoadingApplications) {
       return (
         <SafeAreaView style={styles.root}>
           <ActivityIndicator style={styles.loadingIndicator} />
@@ -82,7 +94,7 @@ export class ApplicationsScreen extends React.Component {
         <FlatList
           style={styles.list}
           data={applications}
-          extraData={AppStore.isLoadingApplications}
+          extraData={isLoadingApplications}
           keyExtractor={(item, index) => item.jobId}
           renderItem={(data) => {
             const { item: application } = data;
@@ -104,7 +116,7 @@ export class ApplicationsScreen extends React.Component {
 
             return (
               <TouchableHighlight
-                onPress={() => this.onJobPress(application.jobId)}
+                onPress={() => this.onApplicationPress(application, term)}
                 underlayColor={Colors.lightBlue}
               >
                 <View style={[
@@ -113,9 +125,18 @@ export class ApplicationsScreen extends React.Component {
                 ]}>
                   <Text style={styles.titleText}>{application.title}</Text>
                   <Text style={styles.companyText}>{application.company}</Text>
-                  <Text>City: {application.city || 'Unknown'}</Text>
-                  <Text>App Status: {application.appStatus}</Text>
-                  <Text>Job Status: {application.jobStatus}</Text>
+                  <View style={styles.group}>
+                    <Text style={styles.key}>City:</Text>
+                    <Text style={styles.value}>{application.city || 'Unknown'}</Text>
+                  </View>
+                  <View style={styles.group}>
+                    <Text style={styles.key}>App Status:</Text>
+                    <Text style={styles.value}>{application.appStatus}</Text>
+                  </View>
+                  <View style={styles.group}>
+                    <Text style={styles.key}>Job Status:</Text>
+                    <Text style={styles.value}>{application.jobStatus}</Text>
+                  </View>
                 </View>
               </TouchableHighlight>
             );
@@ -160,7 +181,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkBlue,
+    borderColor: Colors.black,
     width: deviceWidth,
     backgroundColor: Colors.veryLightBlue,
   },
@@ -172,5 +193,15 @@ const styles = StyleSheet.create({
   },
   companyText: {
     fontSize: 16,
+    marginBottom: 10,
   },
+  group: {
+    flexDirection: 'row',
+  },
+  key: {
+    fontWeight: 'bold',
+    width: 90,
+  },
+  value: {
+  }
 });

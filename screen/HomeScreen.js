@@ -61,14 +61,8 @@ export class HomeScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.root}>
-        {
-          this.isLoggingIn &&
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
-          </View>
-        }
         <View style={styles.main}>
-          <Text style={styles.title}>Waterloo Works Mobile</Text>
+          <Text style={styles.title}>Waterloo Works{'\n'}Plus</Text>
           <TextInput
             style={styles.textInput}
             autoCorrect={false}
@@ -77,6 +71,7 @@ export class HomeScreen extends React.Component {
             value={this.username}
             autoCapitalize={'none'}
             editable={!this.isLoggingIn}
+            underlineColorAndroid={Colors.white}
           />
           <TextInput
             style={styles.textInput}
@@ -86,6 +81,7 @@ export class HomeScreen extends React.Component {
             onChangeText={value => this.password = value}
             value={this.password}
             editable={!this.isLoggingIn}
+            underlineColorAndroid={Colors.white}
           />
           <View style={styles.rememberMeContainer}>
             <Switch
@@ -110,7 +106,7 @@ export class HomeScreen extends React.Component {
           {
             this.showLoginFailedMessage &&
             <Text style={styles.loginFailed}>
-              Login failed
+              We couldn't log you in
             </Text>
           }
         </View>
@@ -119,6 +115,12 @@ export class HomeScreen extends React.Component {
             Not affilliated with the University of Waterloo
           </Text>
         </View>
+        {
+          this.isLoggingIn &&
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
+          </View>
+        }
       </SafeAreaView>
     );
   }

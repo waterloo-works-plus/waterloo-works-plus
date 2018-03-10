@@ -14,6 +14,7 @@ import { HomeScreen } from './screen/HomeScreen';
 import { MenuScreen } from './screen/MenuScreen';
 import { TermSelectScreen } from './screen/TermSelectScreen';
 import { ApplicationsScreen } from './screen/ApplicationsScreen';
+import { JobScreen } from './screen/JobScreen';
 
 const stores = { AppStore };
 
@@ -57,6 +58,9 @@ export default class App extends React.Component {
       },
       Applications: {
         screen: ApplicationsScreen,
+      },
+      Job: {
+        screen: JobScreen
       },
     }, {
       headerMode: 'float',

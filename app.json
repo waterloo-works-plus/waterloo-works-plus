@@ -5,6 +5,7 @@
       "image": "./assets/splash.png",
       "backgroundColor": "#fff",
       "resizeMode": "contain"
-    }
+    },
+    "icon": "./assets/icon.png"
   }
 }

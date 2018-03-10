@@ -20,6 +20,12 @@ const SORT_BY = [{
 }, {
   title: 'Location',
   value: 'location',
+}, {
+  title: 'Openings',
+  value: 'openings',
+}, {
+  title: 'Company',
+  value: 'company',
 }]
 
 export class SortApplicationsByModal extends React.Component {
@@ -51,14 +57,6 @@ export class SortApplicationsByModal extends React.Component {
               )
             }}
           />
-          <TouchableHighlight
-            underlayColor={Colors.veryLightBlue}
-            onPress={onCancel}
-          >
-            <View style={styles.cancelContainer}>
-              <Text style={styles.cancelText}>Cancel</Text>
-            </View>
-          </TouchableHighlight>
         </SafeAreaView>
       </Modal>
     );
@@ -88,21 +86,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue,
     padding: 15,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkBlue,
+    borderColor: Colors.veryLightBlue,
   },
   sortItemText: {
     fontSize: 18,
     color: Colors.white,
   },
-  cancelContainer: {
-    width: deviceWidth,
-    padding: 20,
-    backgroundColor: Colors.blue,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cancelText: {
-    color: Colors.white,
-    fontSize: 18,
-  }
 });
