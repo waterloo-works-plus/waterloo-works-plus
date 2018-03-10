@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 @inject('AppStore')
 @observer

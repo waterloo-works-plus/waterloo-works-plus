@@ -4,11 +4,10 @@ import { ActivityIndicator, Dimensions, ScrollView, StyleSheet,
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
-import HTML from 'react-native-render-html';
 
 import { Accordion } from '../shared/Accordion';
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 @inject('AppStore')
 @observer

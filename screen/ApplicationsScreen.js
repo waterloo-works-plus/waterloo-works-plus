@@ -6,9 +6,9 @@ import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 import _ from 'lodash';
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
-import { SortApplicationsByModal } from './SortApplicationsByModal.js';
+import { SortApplicationsByModal } from './SortApplicationsByModal';
 
 @inject('AppStore')
 @observer
@@ -86,9 +86,14 @@ export class ApplicationsScreen extends React.Component {
           onPress={this.onSortByPress}
           underlayColor={Colors.lightBlue}
         >
-          <View style={styles.sortByContainer}>
-            <Text style={styles.sortByText}>Sort by: </Text>
-            <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>{this.sortByTitle}</Text>
+          <View style={styles.headerContainer}>
+            <View style={styles.sortByContainer}>
+              <Text style={styles.sortByText}>Sort by: </Text>
+              <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>{this.sortByTitle}</Text>
+            </View>
+            <View>
+              <Text style={styles.totalText}>{applications.length + ' apps'}</Text>
+            </View>
           </View>
         </TouchableHighlight>
         <FlatList
@@ -161,18 +166,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: Colors.veryDarkBlue,
   },
-  sortByContainer: {
+  headerContainer: {
     paddingVertical: 10,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
     backgroundColor: Colors.blue,
     width: deviceWidth,
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.veryDarkBlue,
   },
+  sortByContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
   sortByText: {
     color: Colors.white,
     fontSize: 18,
+  },
+  totalText: {
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   list: {
     flex: 1

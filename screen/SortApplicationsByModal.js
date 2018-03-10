@@ -3,7 +3,7 @@ import { Dimensions, FlatList, Modal, StyleSheet,
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 const SORT_BY = [{
   title: 'Job Status',

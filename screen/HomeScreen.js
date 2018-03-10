@@ -6,7 +6,7 @@ import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 
 import { Storage } from '../data/Storage';
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 @inject('AppStore')
 @observer

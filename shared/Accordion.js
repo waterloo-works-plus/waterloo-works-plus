@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native'
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 @observer
 export class Accordion extends React.Component {

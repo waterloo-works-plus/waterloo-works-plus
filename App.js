@@ -6,15 +6,16 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { AppLoading } from 'expo';
 
-import AppStore from './store/AppStore.js';
+import AppStore from './store/AppStore';
 
-import { Storage } from './data/Storage.js';
+import { Storage } from './data/Storage';
 
 import { HomeScreen } from './screen/HomeScreen';
 import { MenuScreen } from './screen/MenuScreen';
 import { TermSelectScreen } from './screen/TermSelectScreen';
 import { ApplicationsScreen } from './screen/ApplicationsScreen';
 import { JobScreen } from './screen/JobScreen';
+import { AboutScreen } from './screen/AboutScreen';
 
 const stores = { AppStore };
 
@@ -61,6 +62,9 @@ export default class App extends React.Component {
       },
       Job: {
         screen: JobScreen
+      },
+      About: {
+        screen: AboutScreen
       },
     }, {
       headerMode: 'float',

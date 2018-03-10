@@ -4,9 +4,9 @@ import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 
-import { Storage } from '../data/Storage.js';
+import { Storage } from '../data/Storage';
 
-import Colors from '../style/Color.js';
+import Colors from '../style/Color';
 
 @inject('AppStore')
 @observer
@@ -31,7 +31,9 @@ export class MenuScreen extends React.Component {
   }
 
   onAboutPress = () => {
+    const { navigation } = this.props;
 
+    navigation.push('About');
   }
 
   render() {
@@ -48,16 +50,16 @@ export class MenuScreen extends React.Component {
           <TouchableHighlight
             style={styles.button}
             underlayColor={Colors.lightBlue}
-            onPress={this.onSignOutPress}
+            onPress={this.onAboutPress}
           >
-            <Text style={styles.buttonText}>Sign out</Text>
+            <Text style={styles.buttonText}>About</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
             underlayColor={Colors.lightBlue}
-            onPress={this.onAboutPress}
+            onPress={this.onSignOutPress}
           >
-            <Text style={styles.buttonText}>About</Text>
+            <Text style={styles.buttonText}>Sign out</Text>
           </TouchableHighlight>
         </ScrollView>
         <View>
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    height: 75,
+    height: 65,
     justifyContent: 'center',
     width: deviceWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
