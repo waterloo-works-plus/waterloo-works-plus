@@ -142,6 +142,10 @@ export class ApplicationsScreen extends React.Component {
                     <Text style={styles.key}>Job Status:</Text>
                     <Text style={styles.value}>{application.jobStatus}</Text>
                   </View>
+                  <View style={styles.group}>
+                    <Text style={styles.key}>Openings:</Text>
+                    <Text style={styles.value}>{application.openings}</Text>
+                  </View>
                 </View>
               </TouchableHighlight>
             );

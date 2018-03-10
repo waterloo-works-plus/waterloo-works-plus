@@ -1,6 +1,13 @@
 {
   "expo": {
     "sdkVersion": "25.0.0",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.munazrahman.waterlooworksplus"
+    },
+    "android": {
+      "package": "com.munazrahman.waterlooworksplus"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "backgroundColor": "#fff",
