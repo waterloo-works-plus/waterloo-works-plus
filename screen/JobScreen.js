@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
   },
   jobContainer: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
   headerText: {
     color: Colors.white,
@@ -314,7 +315,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     backgroundColor: Colors.blue,
-    marginBottom: 15,
   },
   group: {
     marginHorizontal: 10,
@@ -327,18 +327,19 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontWeight: 'bold',
+    color: Colors.darkGrey,
   },
   valueContainer: {
     flex: 1,
   },
   valueText: {
-
+    color: Colors.veryDarkGrey,
   },
   webView: {
     paddingHorizontal: 10
   },
   jobInfoContainer: {
-    marginBottom: 15,
+    paddingVertical: 15,
   },
   bodyText: {
     padding: 10,

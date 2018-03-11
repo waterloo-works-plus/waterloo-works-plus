@@ -24,6 +24,10 @@ export class AboutScreen extends React.Component {
         <ScrollView style={styles.root}>
           <Text style={styles.title}>About Waterloo Works Plus</Text>
           <View style={styles.groupContainer}>
+            <Text style={styles.questionText}>What is this app?</Text>
+            <Text style={styles.answerText}>Waterloo Works Plus is aimed to help you view your applications, jobs and interviews on the go.</Text>
+          </View>
+          <View style={styles.groupContainer}>
             <Text style={styles.questionText}>Is this app associated with the University of Waterloo?</Text>
             <Text style={styles.answerText}>No, it is independently made.</Text>
           </View>
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 15,
     paddingHorizontal: 15,
+    backgroundColor: Colors.white,
   },
   title: {
     fontSize: 32,

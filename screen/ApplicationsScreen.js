@@ -105,33 +105,18 @@ export class ApplicationsScreen extends React.Component {
           keyExtractor={(item, index) => item.jobId}
           renderItem={(data) => {
             const { item: application } = data;
-            let backgroundColor = Colors.veryLightBlue;
-
-            if (application.appStatus === 'Employed') {
-              backgroundColor = Colors.green;
-            } else if (application.appStatus === 'Selected for Interview') {
-              backgroundColor = Colors.lightGreen;
-            } else if (application.appStatus === 'Not Selected') {
-              backgroundColor = Colors.yellow;
-            } else if (application.jobStatus === 'Filled') {
-              backgroundColor = Colors.lightGrey;
-            } else if (application.jobStatus === 'Cancel') {
-              backgroundColor = Colors.grey;
-            } else if (application.appStatus === 'Selected For Interview') {
-              backgroundColor = Colors.yellow;
-            }
 
             return (
               <TouchableHighlight
                 onPress={() => this.onApplicationPress(application, term)}
                 underlayColor={Colors.lightBlue}
               >
-                <View style={[
-                  styles.applicationsContainer,
-                  { backgroundColor: backgroundColor },
-                ]}>
+                <View style={styles.applicationsContainer}>
                   <Text style={styles.titleText}>{application.title}</Text>
                   <Text style={styles.companyText}>{application.company}</Text>
+                  <Text style={styles.locationText}>
+                    {`${application.city}${application.city && ', '}${application.location}`}
+                  </Text>
                   <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex: 1 }}>
                     <View style={styles.group}>
@@ -144,10 +129,6 @@ export class ApplicationsScreen extends React.Component {
                     </View>
                   </View>
                   <View style={{ flex: 1 }}>
-                    <View style={styles.group}>
-                      <Text style={[styles.key, { width: 75 }]}>City:</Text>
-                      <Text style={styles.value}>{application.city || 'Unknown'}</Text>
-                    </View>
                     <View style={styles.group}>
                       <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
                       <Text style={styles.value}>{application.openings}</Text>
@@ -208,7 +189,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.veryDarkGrey,
-    backgroundColor: Colors.veryLightBlue,
+    backgroundColor: Colors.veryLightGrey,
   },
   loadingIndicator: {
     flex: 1,
@@ -216,19 +197,27 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: Colors.veryDarkBlue,
   },
   companyText: {
     fontSize: 16,
-    marginBottom: 5,
     fontWeight: 'bold',
+    color: Colors.darkGrey,
+  },
+  locationText: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: Colors.darkGrey,
   },
   group: {
     flexDirection: 'row',
   },
   key: {
     fontWeight: 'bold',
+    color: Colors.darkGrey,
   },
   value: {
-    flex: 1
+    flex: 1,
+    color: Colors.veryDarkGrey,
   }
 });
