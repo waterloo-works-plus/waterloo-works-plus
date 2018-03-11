@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 22,
     color: Colors.veryDarkBlue,
-    marginLeft: 15,
+    fontWeight: 'bold',
+    marginHorizontal: 15,
     marginBottom: 10,
   },
   list: {
@@ -79,8 +80,9 @@ const styles = StyleSheet.create({
   sortItemContainer: {
     backgroundColor: Colors.blue,
     padding: 15,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryLightBlue,
+    borderColor: Colors.veryDarkGrey,
   },
   sortItemText: {
     fontSize: 18,

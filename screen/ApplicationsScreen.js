@@ -70,7 +70,9 @@ export class ApplicationsScreen extends React.Component {
     if (!applications || !applications.length) {
       return (
         <SafeAreaView style={styles.root}>
-          <Text style={styles.noAppsText}>No applications found</Text>
+          <View style={styles.noAppsContainer}>
+            <Text style={styles.noAppsText}>No applications found</Text>
+          </View>
         </SafeAreaView>
       )
     }
@@ -88,11 +90,11 @@ export class ApplicationsScreen extends React.Component {
         >
           <View style={styles.headerContainer}>
             <View style={styles.sortByContainer}>
-              <Text style={styles.sortByText}>Sort by: </Text>
-              <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>{this.sortByTitle}</Text>
+              <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>Sort by: </Text>
+              <Text style={styles.sortByText}>{this.sortByTitle}</Text>
             </View>
             <View>
-              <Text style={styles.totalText}>{applications.length + ' apps'}</Text>
+              <Text style={styles.totalText}>{applications.length}</Text>
             </View>
           </View>
         </TouchableHighlight>
@@ -130,21 +132,27 @@ export class ApplicationsScreen extends React.Component {
                 ]}>
                   <Text style={styles.titleText}>{application.title}</Text>
                   <Text style={styles.companyText}>{application.company}</Text>
-                  <View style={styles.group}>
-                    <Text style={styles.key}>City:</Text>
-                    <Text style={styles.value}>{application.city || 'Unknown'}</Text>
+                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 80 }]}>Job Status:</Text>
+                      <Text style={styles.value}>{application.jobStatus}</Text>
+                    </View>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 80 }]}>App Status:</Text>
+                      <Text style={styles.value}>{application.appStatus}</Text>
+                    </View>
                   </View>
-                  <View style={styles.group}>
-                    <Text style={styles.key}>App Status:</Text>
-                    <Text style={styles.value}>{application.appStatus}</Text>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 70 }]}>City:</Text>
+                      <Text style={styles.value}>{application.city || 'Unknown'}</Text>
+                    </View>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 70 }]}>Openings:</Text>
+                      <Text style={styles.value}>{application.openings}</Text>
+                    </View>
                   </View>
-                  <View style={styles.group}>
-                    <Text style={styles.key}>Job Status:</Text>
-                    <Text style={styles.value}>{application.jobStatus}</Text>
-                  </View>
-                  <View style={styles.group}>
-                    <Text style={styles.key}>Openings:</Text>
-                    <Text style={styles.value}>{application.openings}</Text>
                   </View>
                 </View>
               </TouchableHighlight>
@@ -160,11 +168,15 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
   },
+  noAppsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   noAppsText: {
-    fontSize: 18,
-    marginTop: 20,
+    fontSize: 22,
     color: Colors.veryDarkBlue,
-    textAlign: 'center',
+    fontWeight: 'bold',
   },
   headerContainer: {
     paddingVertical: 10,
@@ -202,18 +214,20 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 18,
+    fontWeight: 'bold',
   },
   companyText: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 5,
+    fontWeight: 'bold',
   },
   group: {
     flexDirection: 'row',
   },
   key: {
     fontWeight: 'bold',
-    width: 90,
   },
   value: {
+    flex: 1
   }
 });
