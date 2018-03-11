@@ -237,7 +237,7 @@ export class JobScreen extends React.Component {
             <Accordion
               header={'Job Summary'}
             >
-              <Text style={styles.bodyText}>{job.summary}</Text>
+              <Text style={styles.bodyText} selectable>{job.summary}</Text>
             </Accordion>
           }
           {
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     backgroundColor: Colors.blue,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   group: {
     marginHorizontal: 10,

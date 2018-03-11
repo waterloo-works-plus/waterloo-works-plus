@@ -47,9 +47,14 @@ class AppStore {
   }
 
   @action logout = () => {
+    // Clear all the data
     this.isSignedIn = false;
     this.username = '';
     this.password = '';
+    this.isLoadingApplications = new Map();
+    this.applications = new Map();
+    this.isLoadingJob = new Map();
+    this.jobs = new Map();
   }
 
   @action getApplications = () => {

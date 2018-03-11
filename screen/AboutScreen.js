@@ -29,11 +29,11 @@ export class AboutScreen extends React.Component {
           </View>
           <View style={styles.groupContainer}>
             <Text style={styles.questionText}>Do you store any of my data?</Text>
-            <Text style={styles.answerText}>No, user information is not stored on the backend. We use your username and password, stored securely on your mobile device, to login on your behalf in Waterloo Works and retrieve the necessary information.</Text>
+            <Text style={styles.answerText}>No, user information is not stored on the backend. We use your username and password, stored securely on your mobile device, to login to Waterloo Works on your behalf and retrieve only the required information.</Text>
           </View>
           <View style={styles.groupContainer}>
             <Text style={styles.questionText}>Can I contribute?</Text>
-            <Text style={styles.answerText}>Yes! Contribute to our source code here: </Text>
+            <Text style={styles.answerText}>Yes! Contribute to our source code at</Text>
             <TouchableHighlight 
               underlayColor={'transparent'}
               onPress={() => this.handleClick('https://github.com/waterloo-works-plus')}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     paddingVertical: 15,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   title: {
     fontSize: 32,

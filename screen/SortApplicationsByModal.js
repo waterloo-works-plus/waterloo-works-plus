@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Modal, StyleSheet,
+import { FlatList, Modal, StyleSheet, Platform,
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
@@ -47,7 +47,7 @@ export class SortApplicationsByModal extends React.Component {
             renderItem={data => {
               return (
                 <TouchableHighlight
-                  underlayColor={Colors.lightBlue}
+                  underlayColor={Colors.veryLightBlue}
                   onPress={() => onSortByPress(data.item)}
                 >
                   <View style={styles.sortItemContainer}>
@@ -66,6 +66,7 @@ export class SortApplicationsByModal extends React.Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    paddingTop: 10,
   },
   titleText: {
     fontSize: 22,

@@ -16,7 +16,7 @@ export class Accordion extends React.Component {
     return (
       <View>
         <TouchableHighlight
-          underlayColor={Colors.lightBlue}
+          underlayColor={Colors.veryLightBlue}
           onPress={() => {
             this.isVisible = !this.isVisible
           }}
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 50,
     alignItems: 'center',
-    borderColor: Colors.veryLightBlue,
+    borderColor: Colors.veryDarkGrey,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   headerText: {

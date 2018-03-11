@@ -71,7 +71,7 @@ export class ApplicationsScreen extends React.Component {
       return (
         <SafeAreaView style={styles.root}>
           <View style={styles.noAppsContainer}>
-            <Text style={styles.noAppsText}>No applications found</Text>
+            <Text style={styles.noAppsText}>We didn't find any applications</Text>
           </View>
         </SafeAreaView>
       )
@@ -86,7 +86,7 @@ export class ApplicationsScreen extends React.Component {
         />
         <TouchableHighlight
           onPress={this.onSortByPress}
-          underlayColor={Colors.lightBlue}
+          underlayColor={Colors.veryLightBlue}
         >
           <View style={styles.headerContainer}>
             <View style={styles.sortByContainer}>
@@ -135,21 +135,21 @@ export class ApplicationsScreen extends React.Component {
                   <View style={{ flexDirection: 'row' }}>
                   <View style={{ flex: 1 }}>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 80 }]}>Job Status:</Text>
+                      <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
                       <Text style={styles.value}>{application.jobStatus}</Text>
                     </View>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 80 }]}>App Status:</Text>
+                      <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
                       <Text style={styles.value}>{application.appStatus}</Text>
                     </View>
                   </View>
                   <View style={{ flex: 1 }}>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 70 }]}>City:</Text>
+                      <Text style={[styles.key, { width: 75 }]}>City:</Text>
                       <Text style={styles.value}>{application.city || 'Unknown'}</Text>
                     </View>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 70 }]}>Openings:</Text>
+                      <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
                       <Text style={styles.value}>{application.openings}</Text>
                     </View>
                   </View>
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   },
   noAppsContainer: {
     flex: 1,
+    paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue,
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkBlue,
+    borderColor: Colors.veryDarkGrey,
   },
   sortByContainer: {
     flexDirection: 'row',
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.black,
+    borderColor: Colors.veryDarkGrey,
     backgroundColor: Colors.veryLightBlue,
   },
   loadingIndicator: {
