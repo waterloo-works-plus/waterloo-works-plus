@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, FlatList, Modal, StyleSheet,
+import { FlatList, Modal, StyleSheet,
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
@@ -63,26 +63,20 @@ export class SortApplicationsByModal extends React.Component {
   }
 }
 
-const { width: deviceWidth } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.white,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
   },
   titleText: {
     fontSize: 22,
     color: Colors.veryDarkBlue,
     marginLeft: 15,
-    marginVertical: 10,
+    marginBottom: 10,
   },
   list: {
     flex: 1,
   },
   sortItemContainer: {
-    width: deviceWidth,
     backgroundColor: Colors.blue,
     padding: 15,
     borderBottomWidth: StyleSheet.hairlineWidth,

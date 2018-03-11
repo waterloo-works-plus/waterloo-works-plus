@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
@@ -79,25 +79,16 @@ export class TermSelectScreen extends React.Component {
   }
 }
 
-const { width: deviceWidth } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.white,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   main: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
     flex: 1,
   },
   button: {
     height: 75,
     justifyContent: 'center',
-    width: deviceWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: Colors.blue,

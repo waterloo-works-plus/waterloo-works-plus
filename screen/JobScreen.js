@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, 
+import { ActivityIndicator, ScrollView, StyleSheet, 
   Text, TouchableHighlight, View, WebView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
@@ -58,6 +58,28 @@ export class JobScreen extends React.Component {
             <Text style={styles.subHeaderText}>{job.division}</Text>
           </View>
           <View style={styles.jobInfoContainer}>
+            {
+              job.postingStatus &&
+              <View style={styles.group}>
+                <View style={styles.keyContainer}>
+                  <Text style={styles.keyText}>Posting Status:</Text>
+                </View>
+                <View style={styles.valueContainer}>
+                  <Text style={styles.valueText}>{job.postingStatus}</Text>
+                </View>
+              </View>
+            }
+            {
+              job.internalStatus &&
+              <View style={styles.group}>
+                <View style={styles.keyContainer}>
+                  <Text style={styles.keyText}>Internal Status:</Text>
+                </View>
+                <View style={styles.valueContainer}>
+                  <Text style={styles.valueText}>{job.internalStatus}</Text>
+                </View>
+              </View>
+            }
             {
               job.workTerm &&
               <View style={styles.group}>
@@ -256,13 +278,9 @@ export class JobScreen extends React.Component {
   }
 }
 
-const { width: deviceWidth } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.white,
-    justifyContent: 'flex-start',
   },
   loadingIndicator: {
     flex: 1,
@@ -276,19 +294,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerText: {
-    width: deviceWidth - 10,
     color: Colors.white,
     fontSize: 24,
     fontWeight: 'bold',
   },
   subHeaderText: {
-    width: deviceWidth - 10,
     color: Colors.white,
     fontSize: 20,
   },
   bodyText: {
-    marginLeft: 10,
-    width: deviceWidth - 20,
+    marginHorizontal: 10,
     fontSize: 16,
   },
   keyText: {
@@ -302,8 +317,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   group: {
-    width: deviceWidth - 15,
-    marginLeft: 10,
+    marginHorizontal: 10,
     marginBottom: 5,
     flexDirection: 'row',
   },

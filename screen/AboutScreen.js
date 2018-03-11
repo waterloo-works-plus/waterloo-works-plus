@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Image, ScrollView, StyleSheet, Text, 
+import { Linking, ScrollView, StyleSheet, Text, 
   TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
@@ -38,7 +38,7 @@ export class AboutScreen extends React.Component {
               underlayColor={'transparent'}
               onPress={() => this.handleClick('https://github.com/waterloo-works-plus')}
             >
-              <Text style={[styles.answerText, { color: Colors.blue }]}>github.com/waterloo-works-plus</Text>
+              <Text style={styles.linkText}>github.com/waterloo-works-plus</Text>
             </TouchableHighlight>
           </View>
           <View style={styles.groupContainer}>
@@ -47,19 +47,14 @@ export class AboutScreen extends React.Component {
               underlayColor={'transparent'}
               onPress={() => this.handleClick('https://github.com/MunazR')}
             >
-              <Text style={styles.answerText}>Munaz Rahman</Text>
+              <Text style={styles.linkText}>Munaz Rahman</Text>
             </TouchableHighlight>
             <TouchableHighlight 
               underlayColor={'transparent'}
               onPress={() => this.handleClick('https://github.com/santanu23')}
             >
-              <Text style={styles.answerText}>Santanu Sarker</Text>
+              <Text style={styles.linkText}>Santanu Sarker</Text>
             </TouchableHighlight>
-          </View>
-          <View style={styles.madeWithContainer}>
-            <Text style={styles.madeWithText}>Made with </Text>
-            <Image style={styles.heart} source={require('../assets/red-heart.png')} />
-            <Text style={styles.madeWithText}> in Waterloo, Ontario.</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -71,9 +66,8 @@ export class AboutScreen extends React.Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingTop: 15,
+    paddingVertical: 15,
     paddingHorizontal: 10,
-    backgroundColor: Colors.white,
   },
   title: {
     fontSize: 32,
@@ -92,17 +86,8 @@ const styles = StyleSheet.create({
   answerText: {
     fontSize: 16,
   },
-  madeWithContainer: {
-    marginTop: 50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  madeWithText: {
-    fontWeight: 'bold',
-  },
-  heart:{
-    height: 20,
-    width: 20,
+  linkText: {
+    fontSize: 16,
+    color: Colors.blue
   }
 });

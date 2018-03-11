@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, FlatList, StyleSheet, 
+import { ActivityIndicator, FlatList, StyleSheet, 
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
@@ -156,25 +156,20 @@ export class ApplicationsScreen extends React.Component {
   }
 }
 
-const { width: deviceWidth } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.white,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   noAppsText: {
     fontSize: 18,
     marginTop: 20,
     color: Colors.veryDarkBlue,
+    textAlign: 'center',
   },
   headerContainer: {
     paddingVertical: 10,
     paddingHorizontal: 10,
     backgroundColor: Colors.blue,
-    width: deviceWidth,
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.veryDarkBlue,
@@ -200,7 +195,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.black,
-    width: deviceWidth,
     backgroundColor: Colors.veryLightBlue,
   },
   loadingIndicator: {
