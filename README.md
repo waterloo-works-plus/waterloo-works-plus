@@ -17,5 +17,5 @@ $ npm start
 
 Scan the QR code using the Expo client application.
 
-## Screenshoots
+## Screenshots
 <img src="/screenshots/android/login_page.png" width="250"> <img src="/screenshots/android/applications_screen.png" width="250"> <img src="/screenshots/android/job_screen-1.png" width="250">
