@@ -32,10 +32,6 @@ export class AboutScreen extends React.Component {
             <Text style={styles.answerText}>No, it is independently made.</Text>
           </View>
           <View style={styles.groupContainer}>
-            <Text style={styles.questionText}>Do you store any of my data?</Text>
-            <Text style={styles.answerText}>No, user information is not stored on the backend. We use your username and password, stored securely on your mobile device, to login to Waterloo Works on your behalf and retrieve only the required information.</Text>
-          </View>
-          <View style={styles.groupContainer}>
             <Text style={styles.questionText}>Can I contribute?</Text>
             <Text style={styles.answerText}>Yes! Contribute to our source code at</Text>
             <TouchableHighlight 

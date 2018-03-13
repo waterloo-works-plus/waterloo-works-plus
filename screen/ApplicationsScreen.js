@@ -36,6 +36,7 @@ export class ApplicationsScreen extends React.Component {
     
     navigation.push('Job', { 
       jobId: application.jobId,
+      term: term,
       title: application.company
     });
   }
@@ -67,11 +68,27 @@ export class ApplicationsScreen extends React.Component {
       );
     }
 
-    if (!applications || !applications.length) {
+    if (!applications) {
       return (
         <SafeAreaView style={styles.root}>
-          <View style={styles.noAppsContainer}>
-            <Text style={styles.noAppsText}>We didn't find any applications</Text>
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>Oops, something went wrong</Text>
+            <TouchableHighlight
+              underlayColor={'transparent'}
+              onPress={() => AppStore.getApplicationsForTerm(term)}
+            >
+              <Text style={styles.retryText}>Retry</Text>
+            </TouchableHighlight>
+          </View>
+        </SafeAreaView>
+      )
+    }
+
+    if (!applications.length) {
+      return (
+        <SafeAreaView style={styles.root}>
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>We didn't find any applications</Text>
           </View>
         </SafeAreaView>
       )
@@ -118,22 +135,22 @@ export class ApplicationsScreen extends React.Component {
                     {`${application.city}${application.city && ', '}${application.location}`}
                   </Text>
                   <View style={{ flexDirection: 'row' }}>
-                  <View style={{ flex: 1 }}>
-                    <View style={styles.group}>
-                      <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
-                      <Text style={styles.value}>{application.jobStatus}</Text>
+                    <View style={{ flex: 1 }}>
+                      <View style={styles.group}>
+                        <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
+                        <Text style={styles.value}>{application.jobStatus}</Text>
+                      </View>
+                      <View style={styles.group}>
+                        <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
+                        <Text style={styles.value}>{application.appStatus}</Text>
+                      </View>
                     </View>
-                    <View style={styles.group}>
-                      <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
-                      <Text style={styles.value}>{application.appStatus}</Text>
+                    <View style={{ flex: 1 }}>
+                      <View style={styles.group}>
+                        <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
+                        <Text style={styles.value}>{application.openings}</Text>
+                      </View>
                     </View>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <View style={styles.group}>
-                      <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
-                      <Text style={styles.value}>{application.openings}</Text>
-                    </View>
-                  </View>
                   </View>
                 </View>
               </TouchableHighlight>
@@ -149,13 +166,19 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
   },
-  noAppsContainer: {
+  messageContainer: {
     flex: 1,
     paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  noAppsText: {
+  retryText: {
+    fontSize: 28,
+    padding: 10,
+    color: Colors.lightBlue,
+    fontWeight: 'bold',
+  },
+  messageText: {
     fontSize: 22,
     color: Colors.veryDarkBlue,
     fontWeight: 'bold',

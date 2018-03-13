@@ -109,35 +109,27 @@ export class HomeScreen extends React.Component {
               We couldn't log you in
             </Text>
           }
+          {
+            this.isLoggingIn &&
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
+            </View>
+          }
         </View>
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Not affilliated with the University of Waterloo
-          </Text>
-        </View>
-        {
-          this.isLoggingIn &&
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
-          </View>
-        }
       </SafeAreaView>
     );
   }
 }
 
-const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   root: {
-    paddingTop: 20,
     flex: 1,
-    backgroundColor: Colors.white,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   main: {
     flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: Colors.white,
   },
   title: {
     fontSize: 38,
@@ -151,7 +143,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginTop: 10,
-    width: deviceWidth - 30,
     height: 40,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.veryDarkGrey,
@@ -171,7 +162,6 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 20,
-    width: deviceWidth - 30,
     padding: 10,
     backgroundColor: Colors.blue,
     alignItems: 'center',
@@ -182,9 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   loadingContainer: {
-    position: 'absolute',
-    width: deviceWidth,
-    height: deviceHeight,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

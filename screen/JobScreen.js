@@ -28,7 +28,7 @@ export class JobScreen extends React.Component {
   render() {
     const { AppStore, navigation } = this.props;
     const { params } = navigation.state;
-    const { jobId } = params;
+    const { jobId, term } = params;
 
     const job = AppStore.jobs.get(jobId);
     const isLoadingJob = AppStore.isLoadingJob.get(jobId);
@@ -43,7 +43,15 @@ export class JobScreen extends React.Component {
       } else {
         return (
           <SafeAreaView style={styles.root}>
-            <Text style={styles.errorText}>Oops, something went wrong</Text>
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>Oops, something went wrong</Text>
+              <TouchableHighlight
+                underlayColor={'transparent'}
+                onPress={() => AppStore.getJob(jobId, term)}
+              >
+                <Text style={styles.retryText}>Retry</Text>
+              </TouchableHighlight>
+            </View>
           </SafeAreaView>
         );
       }
@@ -285,10 +293,22 @@ const styles = StyleSheet.create({
   loadingIndicator: {
     flex: 1,
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
   errorText: {
     color: Colors.veryDarkBlue,
-    fontSize: 18,
-    marginTop: 20,
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  retryText: {
+    fontSize: 28,
+    padding: 10,
+    color: Colors.lightBlue,
+    fontWeight: 'bold',
   },
   jobContainer: {
     flex: 1,

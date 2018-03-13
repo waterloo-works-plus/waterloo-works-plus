@@ -83,16 +83,16 @@ class AppStore {
     .then(response => {
       if (response.status === 'OK') {
         this.applications.set(term, _.merge(this.applications.get(term), response.jobs));
-        this.isLoadingApplications.set(term, false);
       }
+
+      this.isLoadingApplications.set(term, false);
     })
     .catch(error => {
-      // TODO handle error
-      console.warn('Error getting applications for term: ' + term);
+      this.isLoadingApplications.set(term, false);
     });
   }
 
-  @observable getJob = (jobId, term) => {
+  @action getJob = (jobId, term) => {
     this.isLoadingJob.set(jobId, true);
     Promise.all([
       this.getJobFromDb(jobId),
@@ -102,7 +102,7 @@ class AppStore {
     });
   }
 
-  @observable getJobFromDb = (jobId) => {
+  @action getJobFromDb = (jobId) => {
     return fetch(BASE_URL + '/jobs/db/get', {
       method: 'POST',
       headers: {
@@ -124,7 +124,7 @@ class AppStore {
     })
   }
 
-  @observable getJobFromWW = (jobId, term) => {
+  @action getJobFromWW = (jobId, term) => {
     return fetch(BASE_URL + '/jobs/get', {
       method: 'POST',
       headers: {
