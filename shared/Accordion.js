@@ -13,22 +13,29 @@ export class Accordion extends React.Component {
 
   render() {
     const { header } = this.props;
+
     return (
       <View>
         <TouchableHighlight
-          underlayColor={Colors.veryLightBlue}
+          underlayColor={Colors.grey}
           onPress={() => {
             this.isVisible = !this.isVisible
           }}
         >
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>{header}</Text>
-            <Text style={styles.headerIcon}>{this.isVisible ? '-' : '+'}</Text>
+            <Text style={styles.headerIcon}>{this.isVisible ? '\uE316' : '\uE313'}</Text>
           </View>
         </TouchableHighlight>
         {
           this.isVisible &&
-          <View>
+          <View style={[
+            styles.contentContainer,
+            {
+              borderTopWidth: this.isVisible ? 1 : 0,
+              borderBottomWidth: this.isVisible ? 1 : 0,
+            }
+          ]}>
             {this.props.children}
           </View>
         }
@@ -42,22 +49,23 @@ export class Accordion extends React.Component {
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.blue,
-    paddingHorizontal: 10,
-    height: 50,
+    backgroundColor: Colors.white,
+    paddingHorizontal: 16,
+    height: 48,
     alignItems: 'center',
-    borderColor: Colors.veryDarkGrey,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   headerText: {
-    color: Colors.white,
-    fontSize: 18,
+    color: Colors.veryDarkGrey,
+    fontFamily: 'roboto-regular',
+    fontSize: 16,
     flex: 1,
-    fontWeight: 'bold',
   },
   headerIcon: {
-    color: Colors.white,
+    color: Colors.grey,
+    fontFamily: 'material-icons',
     fontSize: 20,
-    fontWeight: 'bold',
+  },
+  contentContainer: {
+    borderColor: Colors.blackBorder,
   }
 });

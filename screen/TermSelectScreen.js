@@ -31,6 +31,23 @@ export class TermSelectScreen extends React.Component {
     });
   }
 
+  renderTermItem = (title, subtitle, onPress) => {
+    return (
+      <TouchableHighlight
+        underlayColor={Colors.grey}
+        onPress={onPress}
+      >
+        <View style={styles.button}>
+          <View style={styles.buttonTextContainer}>
+            <Text style={styles.buttonText}>{title}</Text>
+            <Text style={styles.buttonSmallText}>{subtitle}</Text>
+          </View>
+          <Text style={styles.rightArrow}>{'\uE315'}</Text>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
   render() {
     const now = new Date();
     const currentTerm = Math.floor((now.getMonth() - 1) / 4);
@@ -53,26 +70,20 @@ export class TermSelectScreen extends React.Component {
     return (
       <SafeAreaView style={styles.root}>
         <ScrollView style={styles.main}>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.lightBlue}
-            onPress={this.onCurrentJobSearchTermPress}
-          >
-            <View style={styles.buttonTextContainer}>
-              <Text style={styles.buttonText}>Current Job Search Term</Text>
-              <Text style={styles.buttonSmallText}>{currentJobSearchTerm}</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.lightBlue}
-            onPress={this.onCurrentWorkTermPress}
-          >
-            <View style={styles.buttonTextContainer}>
-              <Text style={styles.buttonText}>Current Work Term</Text>
-              <Text style={styles.buttonSmallText}>{currentWorkTerm}</Text>
-            </View>
-          </TouchableHighlight>
+          {
+            this.renderTermItem(
+              'Current Job Search Term', 
+              currentJobSearchTerm, 
+              this.onCurrentJobSearchTermPress
+            )
+          }
+          {
+            this.renderTermItem(
+              'Current Work Term', 
+              currentWorkTerm, 
+              this.onCurrentWorkTermPress
+            )
+          }
         </ScrollView>
       </SafeAreaView>
     );
@@ -84,24 +95,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    flex: 1,
+    paddingVertical: 8,
+    backgroundColor: Colors.white,
   },
   button: {
-    height: 75,
-    justifyContent: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.blue,
-  },
-  buttonText: {
-    fontSize: 24,
-    color: Colors.white,
-  },
-  buttonSmallText: {
-    fontSize: 18,
-    color: Colors.white,
+    height: 72,
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
   },
   buttonTextContainer: {
-    marginLeft: 20,
-  }
+    flex: 1,
+    paddingVertical: 20
+  },
+  buttonText: {
+    fontSize: 18,
+    fontFamily: 'roboto-regular',
+    color: Colors.veryDarkGrey,
+  },
+  buttonSmallText: {
+    fontSize: 14,
+    fontFamily: 'roboto-regular',
+    color: Colors.grey,
+  },
+  rightArrow: {
+    fontFamily: 'material-icons',
+    fontSize: 24,
+    color: Colors.grey,
+  },
 });

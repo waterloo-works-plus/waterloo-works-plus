@@ -20,11 +20,6 @@ export class JobScreen extends React.Component {
     };
   };
 
-  formatHTML = (html) => {
-    return '<body style="font-size: 16pt; font-family: Arial; background-color: ' + Colors.veryLightBlue + '">' +
-      html + '</body>';
-  }
-
   render() {
     const { AppStore, navigation } = this.props;
     const { params } = navigation.state;
@@ -37,7 +32,9 @@ export class JobScreen extends React.Component {
       if (isLoadingJob) {
         return (
           <SafeAreaView style={styles.root}>
-            <ActivityIndicator style={styles.loadingIndicator} />
+            <View style={styles.activityContainer}>
+              <ActivityIndicator size={'large'} />
+            </View>
           </SafeAreaView>
         );
       } else {
@@ -46,7 +43,7 @@ export class JobScreen extends React.Component {
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>Oops, something went wrong</Text>
               <TouchableHighlight
-                underlayColor={'transparent'}
+                underlayColor={Colors.lightGrey}
                 onPress={() => AppStore.getJob(jobId, term)}
               >
                 <Text style={styles.retryText}>Retry</Text>
@@ -290,41 +287,52 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
   },
-  loadingIndicator: {
+  activityContainer: {
     flex: 1,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.white,
   },
   errorText: {
-    color: Colors.veryDarkBlue,
-    fontSize: 22,
+    fontSize: 18,
+    marginBottom: 16,
+    color: Colors.veryDarkGrey,
+    fontFamily: 'roboto-regular',
+    textAlign: 'center',
     fontWeight: 'bold',
   },
   retryText: {
-    fontSize: 28,
-    padding: 10,
-    color: Colors.lightBlue,
+    fontSize: 22,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    color: Colors.blue,
     fontWeight: 'bold',
+    fontFamily: 'roboto-regular',
   },
   jobContainer: {
     flex: 1,
     backgroundColor: Colors.white,
   },
   headerText: {
-    color: Colors.white,
-    fontSize: 24,
-    fontWeight: 'bold',
+    color: Colors.veryDarkGrey,
+    fontFamily: 'roboto-regular',
+    fontSize: 22,
   },
   subHeaderText: {
-    color: Colors.white,
-    fontSize: 20,
+    color: Colors.darkGrey,
+    fontFamily: 'roboto-regular',
+    fontSize: 16,
   },
   bodyText: {
     marginHorizontal: 10,
+    fontFamily: 'roboto-regular',
     fontSize: 16,
   },
   keyText: {
@@ -332,21 +340,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headerContainer: {
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    backgroundColor: Colors.blue,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
   },
   group: {
-    marginHorizontal: 10,
-    marginBottom: 5,
+    marginBottom: 12,
     flexDirection: 'row',
   },
   keyContainer: {
     width: 100,
-    marginRight: 5,
+    marginRight: 16,
   },
   keyText: {
     fontWeight: 'bold',
+    fontFamily: 'roboto-regular',
     color: Colors.darkGrey,
   },
   valueContainer: {
@@ -354,15 +361,17 @@ const styles = StyleSheet.create({
   },
   valueText: {
     color: Colors.veryDarkGrey,
-  },
-  webView: {
-    paddingHorizontal: 10
+    fontFamily: 'roboto-regular',
   },
   jobInfoContainer: {
-    paddingVertical: 15,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
   },
   bodyText: {
-    padding: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 24,
     fontSize: 14,
+    fontFamily: 'roboto-regular',
+    color: Colors.veryDarkGrey
   }
 });

@@ -63,7 +63,9 @@ export class ApplicationsScreen extends React.Component {
     if (isLoadingApplications) {
       return (
         <SafeAreaView style={styles.root}>
-          <ActivityIndicator style={styles.loadingIndicator} />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size={'large'} />
+          </View>
         </SafeAreaView>
       );
     }
@@ -74,7 +76,7 @@ export class ApplicationsScreen extends React.Component {
           <View style={styles.messageContainer}>
             <Text style={styles.messageText}>Oops, something went wrong</Text>
             <TouchableHighlight
-              underlayColor={'transparent'}
+              underlayColor={Colors.lightGrey}
               onPress={() => AppStore.getApplicationsForTerm(term)}
             >
               <Text style={styles.retryText}>Retry</Text>
@@ -103,7 +105,7 @@ export class ApplicationsScreen extends React.Component {
         />
         <TouchableHighlight
           onPress={this.onSortByPress}
-          underlayColor={Colors.veryLightBlue}
+          underlayColor={Colors.grey}
         >
           <View style={styles.headerContainer}>
             <View style={styles.sortByContainer}>
@@ -120,40 +122,48 @@ export class ApplicationsScreen extends React.Component {
           data={applications}
           extraData={isLoadingApplications}
           keyExtractor={(item, index) => item.jobId}
+          contentContainerStyle={{ paddingBottom: 16 }}
           renderItem={(data) => {
             const { item: application } = data;
 
             return (
-              <TouchableHighlight
-                onPress={() => this.onApplicationPress(application, term)}
-                underlayColor={Colors.lightBlue}
-              >
-                <View style={styles.applicationsContainer}>
+              <View style={styles.applicationsContainer}>
+                <View style={styles.titleContainer}>
                   <Text style={styles.titleText}>{application.title}</Text>
                   <Text style={styles.companyText}>{application.company}</Text>
                   <Text style={styles.locationText}>
                     {`${application.city}${application.city && ', '}${application.location}`}
                   </Text>
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={{ flex: 1 }}>
-                      <View style={styles.group}>
-                        <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
-                        <Text style={styles.value}>{application.jobStatus}</Text>
-                      </View>
-                      <View style={styles.group}>
-                        <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
-                        <Text style={styles.value}>{application.appStatus}</Text>
-                      </View>
+                </View>
+                <View style={styles.supportingTextContainer}>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
+                      <Text style={styles.value}>{application.jobStatus}</Text>
                     </View>
-                    <View style={{ flex: 1 }}>
-                      <View style={styles.group}>
-                        <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
-                        <Text style={styles.value}>{application.openings}</Text>
-                      </View>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
+                      <Text style={styles.value}>{application.appStatus}</Text>
+                    </View>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.group}>
+                      <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
+                      <Text style={styles.value}>{application.openings}</Text>
                     </View>
                   </View>
                 </View>
-              </TouchableHighlight>
+                <View style={styles.actionsContainer}>
+                  <TouchableHighlight
+                    onPress={() => this.onApplicationPress(application, term)}
+                    underlayColor={Colors.lightGrey}
+                  >
+                    <View style={styles.actionContainer}>
+                      <Text style={styles.actionText}>VIEW</Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
+              </View>
             );
           }}
         />
@@ -171,65 +181,112 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.white,
   },
   retryText: {
-    fontSize: 28,
-    padding: 10,
-    color: Colors.lightBlue,
+    fontSize: 22,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    color: Colors.blue,
     fontWeight: 'bold',
+    fontFamily: 'roboto-regular',
   },
   messageText: {
-    fontSize: 22,
-    color: Colors.veryDarkBlue,
+    fontSize: 18,
+    marginBottom: 16,
+    color: Colors.veryDarkGrey,
+    fontFamily: 'roboto-regular',
+    textAlign: 'center',
     fontWeight: 'bold',
   },
   headerContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: Colors.blue,
+    elevation: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.white,
     flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
+    borderBottomWidth: 1,
+    borderColor: Colors.blackBorder,
   },
   sortByContainer: {
     flexDirection: 'row',
     flex: 1,
   },
   sortByText: {
-    color: Colors.white,
-    fontSize: 18,
+    color: Colors.veryDarkGrey,
+    fontFamily: 'roboto-regular',
+    fontSize: 14,
   },
   totalText: {
-    color: Colors.white,
-    fontSize: 18,
+    color: Colors.veryDarkGrey,
+    fontSize: 14,
+    fontFamily: 'roboto-regular',
     fontWeight: 'bold',
   },
   list: {
-    flex: 1
+    flex: 1,
+    paddingTop: 16,
   },
   applicationsContainer: {
-    padding: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
-    backgroundColor: Colors.veryLightGrey,
+    marginBottom: 16,
+    marginHorizontal: 16,
+    elevation: 1,
+    backgroundColor: Colors.white,
+    borderRadius: 2,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
   },
-  loadingIndicator: {
+  titleContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  supportingTextContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  actionsContainer: {
+    paddingHorizontal: 8,
+    paddingBottom: 16,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  actionContainer: {
+    width: 80,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  actionText: {
+    fontSize: 16,
+    color: Colors.blue,
+    fontFamily: 'roboto-regular',
+    fontWeight: 'bold',
+  },
+  loadingContainer: {
     flex: 1,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.veryDarkBlue,
+    fontFamily: 'roboto-regular',
+    color: Colors.veryDarkGrey,
   },
   companyText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontFamily: 'roboto-regular',
     color: Colors.darkGrey,
   },
   locationText: {
     fontSize: 14,
-    marginBottom: 5,
+    fontFamily: 'roboto-regular',
     color: Colors.darkGrey,
   },
   group: {
@@ -237,10 +294,12 @@ const styles = StyleSheet.create({
   },
   key: {
     fontWeight: 'bold',
+    fontFamily: 'roboto-regular',
     color: Colors.darkGrey,
   },
   value: {
     flex: 1,
+    fontFamily: 'roboto-regular',
     color: Colors.veryDarkGrey,
-  }
+  },
 });

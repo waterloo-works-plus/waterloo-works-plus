@@ -10,12 +10,15 @@ import Colors from '../style/Color';
 
 @inject('AppStore')
 @observer
-export class HomeScreen extends React.Component {
+export class LoginScreen extends React.Component {
   @observable shouldRememberMe = false;
   @observable username = '';
   @observable password = '';
   @observable isLoggingIn = false;
   @observable showLoginFailedMessage = false;
+
+  @observable isUsernameFocused = false;
+  @observable isPasswordFocused = false;
 
   static navigationOptions = {
     title: 'Login',
@@ -62,9 +65,14 @@ export class HomeScreen extends React.Component {
     return (
       <SafeAreaView style={styles.root}>
         <View style={styles.main}>
-          <Text style={styles.title}>Waterloo Works{'\n'}Plus</Text>
+          <Text style={styles.title}>Waterloo Works Plus</Text>
           <TextInput
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              {
+                borderColor: this.isUsernameFocused ? Colors.blue : Colors.blackBorder
+              }
+            ]}
             autoCorrect={false}
             placeholder={'Username'}
             onChangeText={value => this.username = value}
@@ -72,9 +80,16 @@ export class HomeScreen extends React.Component {
             autoCapitalize={'none'}
             editable={!this.isLoggingIn}
             underlineColorAndroid={Colors.white}
+            onFocus={() => this.isUsernameFocused = true}
+            onEndEditing={() => this.isPasswordFocused = false}
           />
           <TextInput
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              {
+                borderColor: this.isPasswordFocused ? Colors.blue : Colors.blackBorder
+              }
+            ]}
             autoCorrect={false}
             placeholder={'Password'}
             secureTextEntry
@@ -82,6 +97,8 @@ export class HomeScreen extends React.Component {
             value={this.password}
             editable={!this.isLoggingIn}
             underlineColorAndroid={Colors.white}
+            onFocus={() => this.isPasswordFocused = true}
+            onEndEditing={() => this.isPasswordFocused = false}
           />
           <View style={styles.rememberMeContainer}>
             <Switch
@@ -92,16 +109,16 @@ export class HomeScreen extends React.Component {
             <Text
               style={[styles.rememberMeText, { color: this.shouldRememberMe ? Colors.veryDarkGrey : Colors.grey }]}
             >
-              Remember me
+              Keep me logged in
             </Text>
           </View>
           <TouchableHighlight
             style={styles.loginButton}
             onPress={this.onLoginPress}
             underlayColor={Colors.lightBlue}
-            disabled={this.isLoggingIn}
+            disabled={this.isLoggingIn || !this.username || !this.password}
           >
-            <Text style={styles.loginText}>Login</Text>
+            <Text style={styles.loginText}>LOGIN</Text>
           </TouchableHighlight>
           {
             this.showLoginFailedMessage &&
@@ -132,36 +149,37 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   title: {
-    fontSize: 38,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 10,
+    paddingVertical: 24,
     textAlign: 'center',
     color: Colors.blue,
-  },
-  footerText: {
-    color: Colors.grey,
+    fontFamily: 'roboto-regular',
   },
   textInput: {
-    marginTop: 10,
+    marginBottom: 16,
     height: 40,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
-    padding: 5,
+    borderBottomWidth: 1,
+    borderColor: Colors.blackBorder,
+    fontFamily: 'roboto-regular',
+    padding: 8,
     fontSize: 18,
   },
   rememberMeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginVertical: 16,
   },
   rememberMeText: {
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 10,
     color: Colors.grey,
+    fontFamily: 'roboto-regular',
   },
   loginButton: {
-    marginTop: 20,
+    elevation: 1,
+    marginVertical: 24,
     padding: 10,
     backgroundColor: Colors.blue,
     alignItems: 'center',
@@ -169,7 +187,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: Colors.white,
-    fontSize: 24,
+    fontSize: 18,
   },
   loadingContainer: {
     flex: 1,
@@ -178,8 +196,9 @@ const styles = StyleSheet.create({
   },
   loginFailed: {
     color: Colors.red,
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
-    marginTop: 15,
+    marginTop: 16,
+    fontFamily: 'roboto-regular',
   }
 });

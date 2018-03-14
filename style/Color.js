@@ -25,4 +25,6 @@ export default Colors = {
   darkGreen: '#388E3C',
   veryDarkGreen: '#1B5E20',
   yellow: '#FFEB3B',
+  black: '#000000',
+  blackBorder: 'rgba(0, 0, 0, 0.12)',
 }

@@ -39,7 +39,6 @@ export class SortApplicationsByModal extends React.Component {
         onRequestClose={onCancel}
       >
         <SafeAreaView style={styles.root}>
-          <Text style={styles.titleText}>Sort by</Text>
           <FlatList
             style={styles.list}
             data={SORT_BY}
@@ -47,11 +46,12 @@ export class SortApplicationsByModal extends React.Component {
             renderItem={data => {
               return (
                 <TouchableHighlight
-                  underlayColor={Colors.veryLightBlue}
+                  underlayColor={Colors.grey}
                   onPress={() => onSortByPress(data.item)}
                 >
                   <View style={styles.sortItemContainer}>
                     <Text style={styles.sortItemText}>{data.item.title}</Text>
+                    <Text style={styles.rightArrow}>{'\uE315'}</Text>
                   </View>
                 </TouchableHighlight>
               )
@@ -66,27 +66,29 @@ export class SortApplicationsByModal extends React.Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingTop: 10,
-  },
-  titleText: {
-    fontSize: 22,
-    color: Colors.veryDarkBlue,
-    fontWeight: 'bold',
-    marginHorizontal: 15,
-    marginBottom: 10,
   },
   list: {
+    paddingTop: 8,
     flex: 1,
   },
   sortItemContainer: {
-    backgroundColor: Colors.blue,
-    padding: 15,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.veryDarkGrey,
+    height: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderColor: Colors.blackBorder,
   },
   sortItemText: {
+    flex: 1,
+    fontFamily: 'roboto-regular',
+    fontSize: 14,
+    color: Colors.veryDarkGrey,
+  },
+  rightArrow: {
+    fontFamily: 'material-icons',
     fontSize: 18,
-    color: Colors.white,
+    color: Colors.grey,
   },
 });

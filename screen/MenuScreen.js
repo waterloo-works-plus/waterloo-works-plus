@@ -1,5 +1,5 @@
 import React from 'react';
-import {  ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
@@ -27,7 +27,7 @@ export class MenuScreen extends React.Component {
 
     Storage.clearUserCredentials();
     AppStore.logout();
-    navigation.push('Home');
+    navigation.push('Login');
   }
 
   onAboutPress = () => {
@@ -36,31 +36,34 @@ export class MenuScreen extends React.Component {
     navigation.push('About');
   }
 
+  renderMenuItem = (icon, text, onPress) => {
+    return (
+      <TouchableHighlight
+        underlayColor={Colors.grey}
+        onPress={onPress}
+      >
+        <View style={styles.button}>
+          <Text style={styles.menuIcon}>{icon}</Text>
+          <Text style={styles.buttonText}>{text}</Text>
+          <Text style={styles.rightArrow}>{'\uE315'}</Text>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.root}>
         <ScrollView style={styles.main}>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.lightBlue}
-            onPress={this.onApplicationsPress}
-          >
-            <Text style={styles.buttonText}>Applications</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.lightBlue}
-            onPress={this.onAboutPress}
-          >
-            <Text style={styles.buttonText}>About</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.lightBlue}
-            onPress={this.onSignOutPress}
-          >
-            <Text style={styles.buttonText}>Sign out</Text>
-          </TouchableHighlight>
+          {
+            this.renderMenuItem('\uE873', 'Applications', this.onApplicationsPress)
+          }
+          {
+            this.renderMenuItem('\uE88E', 'About', this.onAboutPress)
+          }
+          {
+            this.renderMenuItem('\uE879', 'Log out', this.onSignOutPress)
+          }
         </ScrollView>
       </SafeAreaView>
     );
@@ -72,23 +75,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    flex: 1,
+    paddingVertical: 8,
+    backgroundColor: Colors.white,
   },
   button: {
-    height: 65,
-    justifyContent: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.blue,
+    height: 56,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    backgroundColor: Colors.white,
   },
   buttonText: {
+    fontFamily: 'roboto-regular',
+    flex: 1,
+    fontSize: 18,
+    color: Colors.veryDarkGrey,
+  },
+  rightArrow: {
+    fontFamily: 'material-icons',
     fontSize: 24,
-    marginLeft: 20,
-    color: Colors.white,
-  },
-  footerText: {
-    marginVertical: 10,
     color: Colors.grey,
-    textAlign: 'center',
   },
+  menuIcon: {
+    fontFamily: 'material-icons',
+    fontSize: 32,
+    width: 72,
+    color: Colors.grey,
+  }
 });

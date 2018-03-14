@@ -66,29 +66,29 @@ export class AboutScreen extends React.Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 15,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
     backgroundColor: Colors.white,
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: Colors.veryDarkBlue,
-    marginBottom: 10,
+    fontSize: 24,
+    color: Colors.veryDarkGrey,
+    marginBottom: 24,
+    fontFamily: 'roboto-regular',
   },
   groupContainer: {
     marginBottom: 20,
   },
   questionText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 5,
+    fontFamily: 'roboto-regular',
+    fontSize: 16,
   },
   answerText: {
-    fontSize: 16,
+    fontSize: 14,
+    color: Colors.grey,
   },
   linkText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.blue
   }
 });

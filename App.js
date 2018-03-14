@@ -1,16 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { AppLoading } from 'expo';
+import { AppLoading, Font } from 'expo';
 
 import AppStore from './store/AppStore';
 
 import { Storage } from './data/Storage';
 
-import { HomeScreen } from './screen/HomeScreen';
+import { LoginScreen } from './screen/LoginScreen';
 import { MenuScreen } from './screen/MenuScreen';
 import { TermSelectScreen } from './screen/TermSelectScreen';
 import { ApplicationsScreen } from './screen/ApplicationsScreen';
@@ -22,8 +21,20 @@ const stores = { AppStore };
 @observer
 export default class App extends React.Component {
   @observable isReady = false;
+  @observable isLoadingFonts = true;
+
+  loadFonts = async () => {
+    await Font.loadAsync({
+      'material-icons': require('./assets/fonts/MaterialIcons-Regular.ttf'),
+      'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+    });
+
+    this.isLoadingFonts = false;
+  }
 
   componentDidMount() {
+    this.loadFonts();
+
     Storage.getUserCredentials(() => {
       this.isReady = true;
     }, (username, password) => {
@@ -41,15 +52,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (!this.isReady) {
+    if (!this.isReady || this.isLoadingFonts) {
       return <AppLoading />
     }
 
-    let initialRouteName = AppStore.isSignedIn ? 'Menu' : 'Home';
+    let initialRouteName = AppStore.isSignedIn ? 'Menu' : 'Login';
 
     const RootStack = StackNavigator({
-      Home: {
-        screen: HomeScreen,
+      Login: {
+        screen: LoginScreen,
       },
       Menu: {
         screen: MenuScreen,
