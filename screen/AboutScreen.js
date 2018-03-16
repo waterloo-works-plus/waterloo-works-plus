@@ -77,18 +77,21 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
   },
   groupContainer: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
   questionText: {
     fontFamily: 'roboto-regular',
     fontSize: 16,
+    marginBottom: 8,
   },
   answerText: {
     fontSize: 14,
     color: Colors.grey,
+    fontFamily: 'roboto-regular',
   },
   linkText: {
     fontSize: 14,
-    color: Colors.blue
+    color: Colors.blue,
+    fontFamily: 'roboto-medium',
   }
 });

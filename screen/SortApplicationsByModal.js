@@ -6,6 +6,10 @@ import { SafeAreaView } from 'react-navigation';
 import Colors from '../style/Color';
 
 const SORT_BY = [{
+  title: 'Submitted on',
+  value: 'appSubmittedOn',
+  reverse: true,
+},{
   title: 'Job Status',
   value: 'jobStatus',
 }, {
@@ -23,10 +27,11 @@ const SORT_BY = [{
 }, {
   title: 'Openings',
   value: 'openings',
+  reverse: true,
 }, {
   title: 'Company',
   value: 'company',
-}]
+},]
 
 export class SortApplicationsByModal extends React.Component {
   render() {

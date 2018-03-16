@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
 
+import { TermUtil } from '../util/TermUtil';
+
 import Colors from '../style/Color';
 
 @inject('AppStore')
@@ -18,7 +20,7 @@ export class TermSelectScreen extends React.Component {
 
     navigation.push('Applications', {
       title: 'Current Job Search Term',
-      term: AppStore.getCurrentJobSearchTerm(),
+      term: TermUtil.getCurrentJobSearchTerm(),
     });
   }
 
@@ -27,7 +29,7 @@ export class TermSelectScreen extends React.Component {
 
     navigation.push('Applications', {
       title: 'Current Work Term',
-      term: AppStore.getCurrentWorkTerm(),
+      term: TermUtil.getCurrentWorkTerm(),
     });
   }
 

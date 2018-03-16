@@ -304,17 +304,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 16,
     color: Colors.veryDarkGrey,
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   retryText: {
     fontSize: 22,
     paddingVertical: 8,
     paddingHorizontal: 16,
     color: Colors.blue,
-    fontWeight: 'bold',
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
   },
   jobContainer: {
     flex: 1,
@@ -335,10 +333,6 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     fontSize: 16,
   },
-  keyText: {
-    color: Colors.veryDarkBlue,
-    fontWeight: 'bold',
-  },
   headerContainer: {
     paddingVertical: 24,
     paddingHorizontal: 16,
@@ -352,8 +346,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   keyText: {
-    fontWeight: 'bold',
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
     color: Colors.darkGrey,
   },
   valueContainer: {

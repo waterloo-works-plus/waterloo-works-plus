@@ -81,7 +81,7 @@ export class LoginScreen extends React.Component {
             editable={!this.isLoggingIn}
             underlineColorAndroid={Colors.white}
             onFocus={() => this.isUsernameFocused = true}
-            onEndEditing={() => this.isPasswordFocused = false}
+            onBlur={() => this.isUsernameFocused = false}
           />
           <TextInput
             style={[
@@ -98,7 +98,7 @@ export class LoginScreen extends React.Component {
             editable={!this.isLoggingIn}
             underlineColorAndroid={Colors.white}
             onFocus={() => this.isPasswordFocused = true}
-            onEndEditing={() => this.isPasswordFocused = false}
+            onBlur={() => this.isPasswordFocused = false}
           />
           <View style={styles.rememberMeContainer}>
             <Switch
@@ -150,11 +150,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
     paddingVertical: 24,
     textAlign: 'center',
     color: Colors.blue,
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
   },
   textInput: {
     marginBottom: 16,
@@ -179,11 +178,19 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     elevation: 1,
+    borderRadius: 2,
     marginVertical: 24,
     padding: 10,
     backgroundColor: Colors.blue,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
   },
   loginText: {
     color: Colors.white,

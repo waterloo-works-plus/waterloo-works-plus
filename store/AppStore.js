@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import _ from 'lodash';
 
+import { TermUtil } from '../util/TermUtil';
+
 const BASE_URL = 'https://waterlooworksapi.munazrahman.com';
 
 class AppStore {
@@ -13,6 +15,9 @@ class AppStore {
 
   @observable isLoadingJob = new Map();
   @observable jobs = new Map();
+
+  @observable isLoadingInterviews = false;
+  @observable interviews = null;
 
   @action login = (newUsername, newPassword, cb, err) => {
     this.username = newUsername;
@@ -33,6 +38,7 @@ class AppStore {
       if (response.status === 'OK') {
         this.isSignedIn = true;
         this.getApplications();
+        this.getInterviews();
 
         if (cb) {
           cb();
@@ -58,8 +64,8 @@ class AppStore {
   }
 
   @action getApplications = () => {
-    const currentWorkTerm = this.getCurrentWorkTerm();
-    const currentJobSearchTerm = this.getCurrentJobSearchTerm();
+    const currentWorkTerm = TermUtil.getCurrentWorkTerm();
+    const currentJobSearchTerm = TermUtil.getCurrentJobSearchTerm();
 
     this.getApplicationsForTerm(currentWorkTerm);
     this.getApplicationsForTerm(currentJobSearchTerm);
@@ -89,6 +95,33 @@ class AppStore {
     })
     .catch(error => {
       this.isLoadingApplications.set(term, false);
+    });
+  }
+
+  @action getInterviews = () => {
+    this.isLoadingInterviews = true;
+
+    return fetch(BASE_URL + '/interviews/get', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password,
+        numOfDays: -1,
+      }),
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.status === 'OK') {
+        this.interviews = _.merge(this.interviews, response.interviews);
+      }
+
+      this.isLoadingInterviews = false;
+    })
+    .catch(error => {
+      this.isLoadingInterviews = false;
     });
   }
 
@@ -149,17 +182,6 @@ class AppStore {
     })
   }
 
-  getCurrentJobSearchTerm = () => {
-    const now = new Date();
-    const term = 411 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
-    return term.toString();
-  }
-
-  getCurrentWorkTerm = () => {
-    const now = new Date();
-    const term = 410 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
-    return term.toString();
-  }
 }
 
 const appStore = new AppStore();

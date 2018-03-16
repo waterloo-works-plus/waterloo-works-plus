@@ -36,6 +36,12 @@ export class MenuScreen extends React.Component {
     navigation.push('About');
   }
 
+  onInterviewsPress = () => {
+    const { navigation } = this.props;
+
+    navigation.push('Interviews');
+  }
+
   renderMenuItem = (icon, text, onPress) => {
     return (
       <TouchableHighlight
@@ -59,10 +65,13 @@ export class MenuScreen extends React.Component {
             this.renderMenuItem('\uE873', 'Applications', this.onApplicationsPress)
           }
           {
+            this.renderMenuItem('\uE878', 'Interviews', this.onInterviewsPress)
+          }
+          {
             this.renderMenuItem('\uE88E', 'About', this.onAboutPress)
           }
           {
-            this.renderMenuItem('\uE879', 'Log out', this.onSignOutPress)
+            this.renderMenuItem('\uE879', 'Logout', this.onSignOutPress)
           }
         </ScrollView>
       </SafeAreaView>

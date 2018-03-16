@@ -15,6 +15,7 @@ import { TermSelectScreen } from './screen/TermSelectScreen';
 import { ApplicationsScreen } from './screen/ApplicationsScreen';
 import { JobScreen } from './screen/JobScreen';
 import { AboutScreen } from './screen/AboutScreen';
+import { InterviewsScreen } from './screen/InterviewsScreen';
 
 const stores = { AppStore };
 
@@ -27,6 +28,8 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'material-icons': require('./assets/fonts/MaterialIcons-Regular.ttf'),
       'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+      'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+      'roboto-medium': require('./assets/fonts/Roboto-Medium.ttf'),
     });
 
     this.isLoadingFonts = false;
@@ -72,10 +75,13 @@ export default class App extends React.Component {
         screen: ApplicationsScreen,
       },
       Job: {
-        screen: JobScreen
+        screen: JobScreen,
       },
       About: {
-        screen: AboutScreen
+        screen: AboutScreen,
+      },
+      Interviews: {
+        screen: InterviewsScreen,
       },
     }, {
       headerMode: 'float',

@@ -14,8 +14,11 @@ import { SortApplicationsByModal } from './SortApplicationsByModal';
 @observer
 export class ApplicationsScreen extends React.Component {
   @observable isSortByModalVisible = false;
-  @observable sortByTitle = 'Job Status';
-  @observable sortBy = 'jobStatus';
+  @observable sort = {
+    title: 'Submitted on',
+    value: 'appSubmittedOn',
+    reverse: true,
+  };
 
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
@@ -31,11 +34,11 @@ export class ApplicationsScreen extends React.Component {
     const jobId = application.jobId;
     if (!AppStore.jobs.get(jobId) &&
       !AppStore.isLoadingJob.get(jobId)) {
-      AppStore.getJob(application.jobId, term);
+      AppStore.getJob(jobId, term);
     }
     
     navigation.push('Job', { 
-      jobId: application.jobId,
+      jobId: jobId,
       term: term,
       title: application.company
     });
@@ -46,10 +49,14 @@ export class ApplicationsScreen extends React.Component {
   }
 
   onSortChange = (sort) => {
-    this.sortByTitle = sort.title;
-    this.sortBy = sort.value;
-
+    this.sort = sort;
     this.isSortByModalVisible = false;
+  }
+
+  formatDate = (date) => {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ` +
+      `${((date.getHours() + 11) % 12 + 1)}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()} ` + 
+      `${date.getHours() < 12 ? 'AM' : 'PM'}`;
   }
 
   render() {
@@ -57,7 +64,7 @@ export class ApplicationsScreen extends React.Component {
     const { params } = navigation.state;
     const { term } = params;
 
-    const applications = _.sortBy(_.values(AppStore.applications.get(term)), this.sortBy);
+    let applications = AppStore.applications.get(term);
     const isLoadingApplications = AppStore.isLoadingApplications.get(term);
 
     if (isLoadingApplications) {
@@ -86,6 +93,11 @@ export class ApplicationsScreen extends React.Component {
       )
     }
 
+    applications = _.sortBy(_.values(applications), this.sort.value);
+    if (this.sort.reverse) {
+      applications = applications.reverse();
+    }
+
     if (!applications.length) {
       return (
         <SafeAreaView style={styles.root}>
@@ -109,8 +121,8 @@ export class ApplicationsScreen extends React.Component {
         >
           <View style={styles.headerContainer}>
             <View style={styles.sortByContainer}>
-              <Text style={[styles.sortByText, { fontWeight: 'bold' }]}>Sort by: </Text>
-              <Text style={styles.sortByText}>{this.sortByTitle}</Text>
+              <Text style={[styles.sortByText, { fontFamily: 'roboto-medium' }]}>Sort by: </Text>
+              <Text style={styles.sortByText}>{this.sort.title}</Text>
             </View>
             <View>
               <Text style={styles.totalText}>{applications.length}</Text>
@@ -125,33 +137,51 @@ export class ApplicationsScreen extends React.Component {
           contentContainerStyle={{ paddingBottom: 16 }}
           renderItem={(data) => {
             const { item: application } = data;
+            let statusColor = Colors.blue;
+
+            if (application.appStatus === 'Employed') {
+              statusColor = Colors.darkGreen;
+            } else if (application.jobStatus === 'Cancel' ||
+              application.jobStatus === 'Filled') {
+              statusColor = Colors.grey;
+            } else if (application.appStatus === 'Selected for Interview') {
+              statusColor = Colors.green;
+            }
 
             return (
               <View style={styles.applicationsContainer}>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>{application.title}</Text>
-                  <Text style={styles.companyText}>{application.company}</Text>
-                  <Text style={styles.locationText}>
-                    {`${application.city}${application.city && ', '}${application.location}`}
-                  </Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.titleText}>{application.title}</Text>
+                    <Text style={styles.companyText}>{application.company}</Text>
+                    <Text style={styles.locationText}>
+                      {`${application.city}${application.city && ', '}${application.location}`}
+                    </Text>
+                  </View>
+                  <View style={[
+                    styles.statusIcon,
+                    {
+                      backgroundColor: statusColor
+                    }
+                  ]} />
                 </View>
                 <View style={styles.supportingTextContainer}>
-                  <View style={{ flex: 1 }}>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 85 }]}>Job Status:</Text>
+                      <Text style={styles.key}>Job Status:</Text>
                       <Text style={styles.value}>{application.jobStatus}</Text>
                     </View>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 85 }]}>App Status:</Text>
+                      <Text style={styles.key}>App Status:</Text>
                       <Text style={styles.value}>{application.appStatus}</Text>
                     </View>
-                  </View>
-                  <View style={{ flex: 1 }}>
                     <View style={styles.group}>
-                      <Text style={[styles.key, { width: 75 }]}>Openings:</Text>
+                      <Text style={styles.key}>Openings:</Text>
                       <Text style={styles.value}>{application.openings}</Text>
                     </View>
-                  </View>
+                    <View style={styles.group}>
+                      <Text style={styles.key}>Submitted on:</Text>
+                      <Text style={styles.value}>{this.formatDate(new Date(application.appSubmittedOn))}</Text>
+                    </View>
                 </View>
                 <View style={styles.actionsContainer}>
                   <TouchableHighlight
@@ -159,7 +189,7 @@ export class ApplicationsScreen extends React.Component {
                     underlayColor={Colors.lightGrey}
                   >
                     <View style={styles.actionContainer}>
-                      <Text style={styles.actionText}>VIEW</Text>
+                      <Text style={styles.actionText}>VIEW JOB</Text>
                     </View>
                   </TouchableHighlight>
                 </View>
@@ -188,16 +218,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     color: Colors.blue,
-    fontWeight: 'bold',
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
   },
   messageText: {
     fontSize: 18,
     marginBottom: 16,
     color: Colors.veryDarkGrey,
-    fontFamily: 'roboto-regular',
+    fontFamily: 'roboto-medium',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   headerContainer: {
     elevation: 1,
@@ -220,8 +248,7 @@ const styles = StyleSheet.create({
   totalText: {
     color: Colors.veryDarkGrey,
     fontSize: 14,
-    fontFamily: 'roboto-regular',
-    fontWeight: 'bold',
+    fontFamily: 'roboto-medium',
   },
   list: {
     flex: 1,
@@ -241,32 +268,50 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.12,
     shadowRadius: 2,
   },
+  statusIcon: {
+    height: 32,
+    width: 32,
+    marginLeft: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.blackBorder,
+    elevation: 1,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 1,
+  },
   titleContainer: {
     paddingHorizontal: 16,
     paddingVertical: 16,
+    flexDirection: 'row',
   },
   supportingTextContainer: {
-    flexDirection: 'row',
     paddingHorizontal: 16,
     paddingBottom: 16,
   },
   actionsContainer: {
+    height: 48,
+    alignItems: 'center',
     paddingHorizontal: 8,
     paddingBottom: 16,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   actionContainer: {
-    width: 80,
-    height: 40,
+    borderRadius: 2,
+    height: 36,
     justifyContent: 'center',
     alignItems: 'center',
   },
   actionText: {
-    fontSize: 16,
+    paddingHorizontal: 8,
+    fontSize: 14,
     color: Colors.blue,
-    fontFamily: 'roboto-regular',
-    fontWeight: 'bold',
+    fontFamily: 'roboto-medium',
   },
   loadingContainer: {
     flex: 1,
@@ -278,6 +323,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'roboto-regular',
     color: Colors.veryDarkGrey,
+    paddingBottom: 8,
   },
   companyText: {
     fontSize: 14,
@@ -291,10 +337,12 @@ const styles = StyleSheet.create({
   },
   group: {
     flexDirection: 'row',
+    paddingBottom: 4,
   },
   key: {
-    fontWeight: 'bold',
-    fontFamily: 'roboto-regular',
+    width: 100,
+    marginRight: 8,
+    fontFamily: 'roboto-medium',
     color: Colors.darkGrey,
   },
   value: {

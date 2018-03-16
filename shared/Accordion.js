@@ -22,7 +22,12 @@ export class Accordion extends React.Component {
             this.isVisible = !this.isVisible
           }}
         >
-          <View style={styles.headerContainer}>
+          <View style={[
+            styles.headerContainer,
+            {
+              borderBottomWidth: this.isVisible ? 0 : 1,
+            }
+          ]}>
             <Text style={styles.headerText}>{header}</Text>
             <Text style={styles.headerIcon}>{this.isVisible ? '\uE316' : '\uE313'}</Text>
           </View>
@@ -32,7 +37,6 @@ export class Accordion extends React.Component {
           <View style={[
             styles.contentContainer,
             {
-              borderTopWidth: this.isVisible ? 1 : 0,
               borderBottomWidth: this.isVisible ? 1 : 0,
             }
           ]}>
@@ -50,20 +54,22 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     backgroundColor: Colors.white,
+    borderBottomWidth: 1,
+    borderColor: Colors.blackBorder,
     paddingHorizontal: 16,
     height: 48,
     alignItems: 'center',
   },
   headerText: {
     color: Colors.veryDarkGrey,
-    fontFamily: 'roboto-regular',
-    fontSize: 16,
+    fontFamily: 'roboto-medium',
+    fontSize: 14,
     flex: 1,
   },
   headerIcon: {
     color: Colors.grey,
     fontFamily: 'material-icons',
-    fontSize: 20,
+    fontSize: 18,
   },
   contentContainer: {
     borderColor: Colors.blackBorder,
