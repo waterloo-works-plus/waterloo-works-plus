@@ -2,14 +2,15 @@
   "expo": {
     "name": "WW+",
     "sdkVersion": "25.0.0",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "slug": "waterloo-works-plus",
     "ios": {
       "bundleIdentifier": "com.munazrahman.waterlooworksplus"
     },
     "android": {
       "package": "com.munazrahman.waterlooworksplus",
-      "versionCode": 2
+      "versionCode": 3,
+      "permissions": []
     },
     "splash": {
       "image": "./assets/splash.png",
