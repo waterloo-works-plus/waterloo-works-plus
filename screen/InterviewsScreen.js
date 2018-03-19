@@ -116,18 +116,40 @@ export class InterviewsScreen extends React.Component {
             const oneHourAgo = new Date();
             oneHourAgo.setHours((now.getHours()) - 1 % 24);
             const interviewDateTime = new Date(interview.dateTime);
+            
+            let interviewIcon = '\uE87c';
+
+            switch (interview.method) {
+              case 'In Person':
+                interviewIcon = '\uE8D3';
+                break;
+              case 'Webcam':
+                interviewIcon = '\uE04B';
+                break;
+              case 'Phone':
+                interviewIcon = '\uE0CD';
+                break;
+            }
 
             return (
-              <View style={[
-                styles.interviewContainer,
-                {
-                  opacity: oneHourAgo > interviewDateTime ? 0.8 : 1
-                }
-              ]}>
+              <View style={styles.interviewContainer}>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>{interview.jobTitle}</Text>
-                  <Text style={styles.companyText}>{interview.organization}</Text>
-                  <Text style={styles.divisionText}>{interview.division}</Text>
+                  <View style={{ flex: 1}}>
+                    <Text style={styles.titleText}>{interview.jobTitle}</Text>
+                    <Text style={styles.companyText}>{interview.organization}</Text>
+                    <Text style={styles.divisionText}>{interview.division}</Text>
+                  </View>
+                  <View>
+                    <View style={[
+                      styles.statusIcon,
+                      {
+                        backgroundColor: oneHourAgo > interviewDateTime ? 
+                          Colors.grey : Colors.blue,
+                      }
+                    ]}>
+                      <Text style={styles.statusChar}>{interviewIcon}</Text>
+                    </View>
+                  </View>
                 </View>
                 <View style={styles.supportingTextContainer}>
                   <View style={styles.group}>
@@ -219,6 +241,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   titleContainer: {
+    flexDirection: 'row',
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
@@ -286,5 +309,30 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'roboto-regular',
     color: Colors.veryDarkGrey,
+  },
+  statusIcon: {
+    height: 36,
+    width: 36,
+    marginLeft: 16,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: Colors.blackBorder,
+    backgroundColor: Colors.blue,
+    elevation: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 1,
+  },
+  statusChar: {
+    textAlign: 'center',
+    color: Colors.white,
+    fontSize: 22,
+    fontFamily: 'material-icons',
   },
 });

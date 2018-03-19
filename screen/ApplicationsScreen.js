@@ -137,15 +137,21 @@ export class ApplicationsScreen extends React.Component {
           contentContainerStyle={{ paddingBottom: 16 }}
           renderItem={(data) => {
             const { item: application } = data;
-            let statusColor = Colors.blue;
+            let jobStatusColor = Colors.blue;
+            let appStatusColor = Colors.blue;
 
             if (application.appStatus === 'Employed') {
-              statusColor = Colors.darkGreen;
-            } else if (application.jobStatus === 'Cancel' ||
-              application.jobStatus === 'Filled') {
-              statusColor = Colors.grey;
+              appStatusColor = Colors.darkGreen;
             } else if (application.appStatus === 'Selected for Interview') {
-              statusColor = Colors.green;
+              appStatusColor = Colors.green;
+            } else if (application.appStatus === 'Not Selected') {
+              appStatusColor = Colors.red;
+            }
+            
+            if (application.jobStatus === 'Cancel') {
+              jobStatusColor = Colors.red;
+            } else if (application.jobStatus === 'Filled') {
+              jobStatusColor = Colors.grey;
             }
 
             return (
@@ -158,12 +164,25 @@ export class ApplicationsScreen extends React.Component {
                       {`${application.city}${application.city && ', '}${application.location}`}
                     </Text>
                   </View>
-                  <View style={[
-                    styles.statusIcon,
-                    {
-                      backgroundColor: statusColor
-                    }
-                  ]} />
+                  <View>
+                    <View style={[
+                      styles.statusIcon,
+                      {
+                        backgroundColor: jobStatusColor,
+                        marginBottom: 8,
+                      }
+                    ]}>
+                      <Text style={styles.statusChar}>{application.jobStatus.toUpperCase().charAt(0)}</Text>
+                    </View>
+                    <View style={[
+                      styles.statusIcon,
+                      {
+                        backgroundColor: appStatusColor
+                      }
+                    ]}>
+                      <Text style={styles.statusChar}>{application.appStatus.toUpperCase().charAt(0)}</Text>
+                    </View>
+                  </View>
                 </View>
                 <View style={styles.supportingTextContainer}>
                     <View style={styles.group}>
@@ -269,13 +288,15 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   statusIcon: {
-    height: 32,
-    width: 32,
+    height: 36,
+    width: 36,
     marginLeft: 16,
-    borderRadius: 16,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: Colors.blackBorder,
     elevation: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: Colors.black,
     shadowOffset: {
       width: 1,
@@ -283,6 +304,11 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.12,
     shadowRadius: 1,
+  },
+  statusChar: {
+    textAlign: 'center',
+    color: Colors.white,
+    fontFamily: 'roboto-medium',
   },
   titleContainer: {
     paddingHorizontal: 16,
