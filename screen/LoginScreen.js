@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, StyleSheet, Switch, Text, 
-  TextInput, TouchableHighlight, View } from 'react-native';
+import { ActivityIndicator, Dimensions, StyleSheet, Switch, Text,
+  TextInput, TouchableHighlight, View, WebView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
@@ -8,132 +8,55 @@ import { inject, observer } from 'mobx-react/native'
 import { Storage } from '../data/Storage';
 import Colors from '../style/Color';
 
-@inject('AppStore')
-@observer
 export class LoginScreen extends React.Component {
-  @observable shouldRememberMe = false;
-  @observable username = '';
-  @observable password = '';
-  @observable isLoggingIn = false;
-  @observable showLoginFailedMessage = false;
+  constructor(props) {
+    super(props);
+    this.state = {
+      cookies    : {},
+      webViewUrl : ''
+    }
+    this.webView = null;
+  }
 
-  @observable isUsernameFocused = false;
-  @observable isPasswordFocused = false;
 
-  static navigationOptions = {
-    title: 'Login',
-    headerLeft: null,
-  };
+  onNavigationStateChange = (webViewState: { url: string }) => {
+    const { url } = webViewState;
 
-  componentWillMount() {
-    const { AppStore } = this.props;
-
-    this.username = AppStore.username;
-    this.password = AppStore.password;
-
-    if (this.username && this.password) {
-      this.shouldRememberMe = true;
+    // when WebView.onMessage called, there is not-http(s) url
+    if(url.includes('http')) {
+      this.setState({ webViewUrl: url })
     }
   }
 
-  onLoginPress = () => {
-    const { AppStore, navigation } = this.props;
+  _onMessage = (event) => {
+    console.log('message');
+    const { data } = event.nativeEvent;
+    const cookies  = data.split(';'); // `csrftoken=...; rur=...; mid=...; somethingelse=...`
 
-    if (!this.username || !this.password) {
-      return;
-    }
+    cookies.forEach((cookie) => {
+      const c = cookie.trim().split('=');
 
-    if (this.shouldRememberMe) {
-      Storage.updateUserCredentials(this.username, this.password);
-    }
+      const new_cookies = this.state.cookies;
+      new_cookies[c[0]] = c[1];
 
-    this.isLoggingIn = true;
-
-    AppStore.login(this.username, this.password, () => {
-      // Login successful
-      this.isLoggingIn = false;
-      this.showLoginFailedMessage = false;
-      navigation.push('Menu');
-    }, (error) => {
-      // Login failed
-      this.isLoggingIn = false;
-      this.showLoginFailedMessage = true;
+      this.setState({ cookies: new_cookies });
     });
+
   }
 
   render() {
+    const jsCode = "window.postMessage(document.cookie)"
+    // let jsCode = "window.postMessage(document.cookie= 'login=; expires=Bla bla bla')"; // if you need to write some cookies, not sure if it goes to shared cookies, most probably no :)
+
     return (
-      <SafeAreaView style={styles.root}>
-        <View style={styles.main}>
-          <Text style={styles.title}>Waterloo Works Plus</Text>
-          <TextInput
-            style={[
-              styles.textInput,
-              {
-                borderColor: this.isUsernameFocused ? Colors.blue : Colors.blackBorder
-              }
-            ]}
-            autoCorrect={false}
-            placeholder={'Username'}
-            onChangeText={value => this.username = value}
-            value={this.username}
-            autoCapitalize={'none'}
-            editable={!this.isLoggingIn}
-            underlineColorAndroid={Colors.white}
-            onFocus={() => this.isUsernameFocused = true}
-            onBlur={() => this.isUsernameFocused = false}
-          />
-          <TextInput
-            style={[
-              styles.textInput,
-              {
-                borderColor: this.isPasswordFocused ? Colors.blue : Colors.blackBorder
-              }
-            ]}
-            autoCorrect={false}
-            placeholder={'Password'}
-            secureTextEntry
-            onChangeText={value => this.password = value}
-            value={this.password}
-            editable={!this.isLoggingIn}
-            underlineColorAndroid={Colors.white}
-            onFocus={() => this.isPasswordFocused = true}
-            onBlur={() => this.isPasswordFocused = false}
-          />
-          <View style={styles.rememberMeContainer}>
-            <Switch
-              value={this.shouldRememberMe}
-              onValueChange={value => this.shouldRememberMe = value}
-              disabled={this.isLoggingIn}
-            />
-            <Text
-              style={[styles.rememberMeText, { color: this.shouldRememberMe ? Colors.veryDarkGrey : Colors.grey }]}
-            >
-              Keep me logged in
-            </Text>
-          </View>
-          <TouchableHighlight
-            style={styles.loginButton}
-            onPress={this.onLoginPress}
-            underlayColor={Colors.lightBlue}
-            disabled={this.isLoggingIn || !this.username || !this.password}
-          >
-            <Text style={styles.loginText}>LOGIN</Text>
-          </TouchableHighlight>
-          {
-            this.showLoginFailedMessage &&
-            <Text style={styles.loginFailed}>
-              We couldn't log you in
-            </Text>
-          }
-          {
-            this.isLoggingIn &&
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size={'large'} color={Colors.veryDarkBlue} />
-            </View>
-          }
-        </View>
-      </SafeAreaView>
+      <WebView
+        source={{ uri: 'https://cas.uwaterloo.ca/cas/login?service=https://waterlooworks.uwaterloo.ca/waterloo.htm' }}
+        onNavigationStateChange={this.onNavigationStateChange}
+        onMessage={this._onMessage}
+        injectedJavaScript={jsCode}
+        style={{ flex: 1 }}
+        ref={( webView ) => this.webView = webView}
+      />
     );
   }
 }
