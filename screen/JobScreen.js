@@ -20,6 +20,17 @@ export class JobScreen extends React.Component {
     };
   };
 
+  componentWillMount() {
+    const { AppStore, navigation } = this.props;
+    const { params } = navigation.state;
+    const { jobId, term } = params;
+
+    if (!AppStore.jobs.get(jobId) &&
+      !AppStore.isLoadingJob.get(jobId)) {
+      AppStore.getJob(jobId, term);
+    }
+  }
+
   render() {
     const { AppStore, navigation } = this.props;
     const { params } = navigation.state;

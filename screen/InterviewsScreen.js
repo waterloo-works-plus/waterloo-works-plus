@@ -20,23 +20,26 @@ export class InterviewsScreen extends React.Component {
     title: 'Interviews'
   };
 
+  componentWillMount() {
+    const { AppStore } = this.props;
+
+    if (!AppStore.interviews &&
+      !AppStore.isLoadingInterviews) {
+        AppStore.getInterviews();
+    }
+  }
+
   onInterviewsPress = (interview) => {
     const { AppStore, navigation } = this.props;
 
   }
 
   onJobPress = (interview) => {
-    const { AppStore, navigation } = this.props;
+    const { navigation } = this.props;
     const term = TermUtil.convertReadableTermToTermNum(interview.term)
 
-    const jobId = interview.jobId;
-    if (!AppStore.jobs.get(jobId) &&
-      !AppStore.isLoadingJob.get(jobId)) {
-      AppStore.getJob(jobId, term);
-    }
-    
     navigation.push('Job', { 
-      jobId: jobId,
+      jobId: interview.jobId,
       term: term,
       title: interview.organization,
     });

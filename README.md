@@ -7,6 +7,7 @@ Available on the [Google Play Store](https://play.google.com/store/apps/details?
 Download Expo app from [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en) or [App Store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8).
 ### Installation
 ```
+$ npm install -g exp
 $ npm install
 ```
 

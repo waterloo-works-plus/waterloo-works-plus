@@ -44,12 +44,8 @@ export default class App extends React.Component {
       if (!username || !password) {
         this.isReady = true;
       } else {
-        AppStore.login(username, password, () => {
-          this.isReady = true;
-        }, (error) => {
-          console.warn(error);
-          this.isReady = true;
-        });
+        AppStore.setUserCredentials(username, password);
+        this.isReady = true;
       }
     })
   }

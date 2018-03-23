@@ -5,6 +5,11 @@ import { TermUtil } from '../util/TermUtil';
 
 const BASE_URL = 'https://waterlooworksapi.munazrahman.com';
 
+const JOB_STATUS_VALUES =
+  ['Cancel', 'Expired - Apps Available', 'Filled', 'Posted', 'Sub Posted'];
+const APP_STATUS_VALUES =
+  ['Applied', 'Employed', 'Not Selected', 'Selected for Interview'];
+
 class AppStore {
   @observable isSignedIn = false;
   @observable username = '';
@@ -18,6 +23,14 @@ class AppStore {
 
   @observable isLoadingInterviews = false;
   @observable interviews = null;
+  
+  @observable jobStatusFilters = JOB_STATUS_VALUES;
+  @observable appStatusFilters = APP_STATUS_VALUES;
+
+  @action setUserCredentials = (username, password, cb, err) => {
+    this.isSignedIn = true;
+    return this.login(username, password, cb, err);
+  }
 
   @action login = (newUsername, newPassword, cb, err) => {
     this.username = newUsername;
@@ -37,13 +50,12 @@ class AppStore {
     .then(response => {
       if (response.status === 'OK') {
         this.isSignedIn = true;
-        this.getApplications();
-        this.getInterviews();
 
         if (cb) {
           cb();
         }
       } else {
+        this.isSignedIn = false;
         if (err) {
           err();
         }
@@ -61,14 +73,8 @@ class AppStore {
     this.applications = new Map();
     this.isLoadingJob = new Map();
     this.jobs = new Map();
-  }
-
-  @action getApplications = () => {
-    const currentWorkTerm = TermUtil.getCurrentWorkTerm();
-    const currentJobSearchTerm = TermUtil.getCurrentJobSearchTerm();
-
-    this.getApplicationsForTerm(currentWorkTerm);
-    this.getApplicationsForTerm(currentJobSearchTerm);
+    this.interviews = null;
+    this.isLoadingInterviews = false;
   }
 
   @action getApplicationsForTerm = (term) => {
@@ -182,6 +188,30 @@ class AppStore {
     })
   }
 
+  @action toggleAppStatusFilter(value) {
+    const index = this.appStatusFilters.indexOf(value);
+    if (index === -1) {
+      this.appStatusFilters.push(value);
+    } else {
+      this.appStatusFilters.splice(index, 1);
+    }
+
+    this.filtersLastUpdated = new Date();
+  }
+
+  @action toggleJobStatusFilter(value) {
+    const index = this.jobStatusFilters.indexOf(value);
+    if (index === -1) {
+      this.jobStatusFilters.push(value);
+    } else {
+      this.jobStatusFilters.splice(index, 1);
+    }
+  }
+
+  @action resetAppFilters() {
+    this.appStatusFilters = APP_STATUS_VALUES;
+    this.jobStatusFilters = JOB_STATUS_VALUES;
+  }
 }
 
 const appStore = new AppStore();

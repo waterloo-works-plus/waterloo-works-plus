@@ -9,11 +9,13 @@ import _ from 'lodash';
 import Colors from '../style/Color';
 
 import { SortApplicationsByModal } from './SortApplicationsByModal';
+import { FilterApplicationsModal } from './FilterApplicationsModal';
 
 @inject('AppStore')
 @observer
 export class ApplicationsScreen extends React.Component {
   @observable isSortByModalVisible = false;
+  @observable isFilterModalVisible = false;
   @observable sort = {
     title: 'Submitted on',
     value: 'appSubmittedOn',
@@ -28,24 +30,25 @@ export class ApplicationsScreen extends React.Component {
     };
   };
 
-  onApplicationPress = (application, term) => {
+  componentWillMount() {
     const { AppStore, navigation } = this.props;
+    const { params } = navigation.state;
+    const { term } = params;
 
-    const jobId = application.jobId;
-    if (!AppStore.jobs.get(jobId) &&
-      !AppStore.isLoadingJob.get(jobId)) {
-      AppStore.getJob(jobId, term);
+    if (!AppStore.applications.get(term) &&
+      !AppStore.isLoadingApplications.get(term)) {
+      AppStore.getApplicationsForTerm(term);
     }
+  }
+
+  onApplicationPress = (application, term) => {
+    const { navigation } = this.props;
     
     navigation.push('Job', { 
-      jobId: jobId,
+      jobId: application.jobId,
       term: term,
       title: application.company
     });
-  }
-
-  onSortByPress = () => {
-    this.isSortByModalVisible = true;
   }
 
   onSortChange = (sort) => {
@@ -92,8 +95,9 @@ export class ApplicationsScreen extends React.Component {
         </SafeAreaView>
       )
     }
+    
+    applications = _.values(applications);
 
-    applications = _.sortBy(_.values(applications), this.sort.value);
     if (this.sort.reverse) {
       applications = applications.reverse();
     }
@@ -108,6 +112,21 @@ export class ApplicationsScreen extends React.Component {
       )
     }
 
+    const totalAppCount = applications.length;
+    const appStatusFilters = AppStore.appStatusFilters;
+    const jobStatusFilters = AppStore.jobStatusFilters;
+
+    applications = _.filter(applications, application => {
+      return appStatusFilters.indexOf(application.appStatus) > -1 &&
+        jobStatusFilters.indexOf(application.jobStatus) > -1;
+    });
+
+    applications = _.sortBy(applications, this.sort.value);
+
+    if (this.sort.reverse) {
+      applications = applications.reverse();
+    }
+
     return (
       <SafeAreaView style={styles.root}>
         <SortApplicationsByModal
@@ -115,20 +134,32 @@ export class ApplicationsScreen extends React.Component {
           onCancel={() => this.isSortByModalVisible = false}
           onSortByPress={this.onSortChange}
         />
-        <TouchableHighlight
-          onPress={this.onSortByPress}
-          underlayColor={Colors.grey}
-        >
-          <View style={styles.headerContainer}>
-            <View style={styles.sortByContainer}>
-              <Text style={[styles.sortByText, { fontFamily: 'roboto-medium' }]}>Sort by: </Text>
-              <Text style={styles.sortByText}>{this.sort.title}</Text>
+        <FilterApplicationsModal
+          isVisible={this.isFilterModalVisible}
+          onDonePress={() => this.isFilterModalVisible = false}
+          onCancel={() => this.isFilterModalVisible = false}
+        />
+        <View style={styles.headerContainer}>
+          <TouchableHighlight
+            style={styles.headerButton}
+            onPress={() => this.isSortByModalVisible = true}
+            underlayColor={Colors.lightGrey}
+          >
+            <View style={styles.headerItemContainer}>
+              <Text style={[styles.headerText, { fontFamily: 'roboto-medium' }]}>Sort by: </Text>
+              <Text style={styles.headerText}>{this.sort.title}</Text>
             </View>
-            <View>
-              <Text style={styles.totalText}>{applications.length}</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.headerButton}
+            onPress={() => this.isFilterModalVisible = true}
+            underlayColor={Colors.lightGrey}
+          >
+            <View style={styles.headerItemContainer}>
+              <Text style={[styles.headerText, { fontFamily: 'roboto-medium' }]}>Viewing {applications.length} of {totalAppCount}</Text>
             </View>
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        </View>
         <FlatList
           style={styles.list}
           data={applications}
@@ -248,18 +279,32 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     elevation: 1,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    height: 45,
     backgroundColor: Colors.white,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: Colors.blackBorder,
+    alignItems: 'center',
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
   },
-  sortByContainer: {
-    flexDirection: 'row',
+  headerButton: {
     flex: 1,
   },
-  sortByText: {
+  headerItemContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderColor: Colors.blackBorder,
+  },
+  headerText: {
     color: Colors.veryDarkGrey,
     fontFamily: 'roboto-regular',
     fontSize: 14,

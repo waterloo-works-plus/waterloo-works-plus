@@ -16,7 +16,7 @@ export class TermSelectScreen extends React.Component {
   };
 
   onCurrentJobSearchTermPress = () => {
-    const { AppStore, navigation } = this.props;
+    const { navigation } = this.props;
 
     navigation.push('Applications', {
       title: 'Current Job Search Term',
@@ -25,7 +25,7 @@ export class TermSelectScreen extends React.Component {
   }
 
   onCurrentWorkTermPress = () => {
-    const { AppStore, navigation } = this.props;
+    const { navigation } = this.props;
 
     navigation.push('Applications', {
       title: 'Current Work Term',

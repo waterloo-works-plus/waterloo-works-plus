@@ -5,7 +5,8 @@
     "version": "1.0.2",
     "slug": "waterloo-works-plus",
     "ios": {
-      "bundleIdentifier": "com.munazrahman.waterlooworksplus"
+      "bundleIdentifier": "com.munazrahman.waterlooworksplus",
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "com.munazrahman.waterlooworksplus",
