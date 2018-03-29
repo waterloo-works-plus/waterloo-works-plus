@@ -23,6 +23,9 @@ class AppStore {
 
   @observable isLoadingInterviews = false;
   @observable interviews = null;
+
+  @observable isLoadingInterviewDetails = new Map();
+  @observable interviewDetails = new Map();
   
   @observable jobStatusFilters = JOB_STATUS_VALUES;
   @observable appStatusFilters = APP_STATUS_VALUES;
@@ -129,6 +132,35 @@ class AppStore {
     .catch(error => {
       this.isLoadingInterviews = false;
     });
+  }
+
+  @action getInterviewDetails = (interviewId) => {
+    this.isLoadingInterviewDetails.set(interviewId, true);
+
+    return fetch(BASE_URL + '/interviews/get-interview', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password,
+        interviewId: interviewId,
+      })
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.status === 'OK') {
+        this.interviewDetails.set(interviewId, response.interview);
+      }
+
+      this.isLoadingInterviewDetails.set(interviewId, false);
+    })
+    .catch(error => {
+      // TODO handle error
+      console.warn('Error getting interviewDetails: ' + interviewId);
+      this.isLoadingInterviewDetails.set(interviewId, false);
+    })
   }
 
   @action getJob = (jobId, term) => {

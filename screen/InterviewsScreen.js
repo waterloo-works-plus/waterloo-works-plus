@@ -32,6 +32,11 @@ export class InterviewsScreen extends React.Component {
   onInterviewsPress = (interview) => {
     const { AppStore, navigation } = this.props;
 
+    navigation.push('InterviewDetails', {
+      interviewId: interview.interviewId,
+      title: interview.organization,
+      interview: interview,
+    });
   }
 
   onJobPress = (interview) => {
@@ -181,19 +186,15 @@ export class InterviewsScreen extends React.Component {
                       <Text style={styles.actionText}>VIEW JOB</Text>
                     </View>
                   </TouchableHighlight>
-                  {
-                    // TODO
-                    false && 
-                    <TouchableHighlight
-                      style={{ marginLeft: 8 }}
-                      onPress={() => this.onInterviewsPress(interview)}
-                      underlayColor={Colors.lightGrey}
-                    >
-                      <View style={styles.actionContainer}>
-                        <Text style={styles.actionText}>VIEW INTERVIEW</Text>
-                      </View>
-                    </TouchableHighlight>
-                  }
+                  <TouchableHighlight
+                    style={{ marginLeft: 8 }}
+                    onPress={() => this.onInterviewsPress(interview)}
+                    underlayColor={Colors.lightGrey}
+                  >
+                    <View style={styles.actionContainer}>
+                      <Text style={styles.actionText}>VIEW INTERVIEW</Text>
+                    </View>
+                  </TouchableHighlight>
                 </View>
               </View>
             );

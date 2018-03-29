@@ -16,6 +16,7 @@ import { ApplicationsScreen } from './screen/ApplicationsScreen';
 import { JobScreen } from './screen/JobScreen';
 import { AboutScreen } from './screen/AboutScreen';
 import { InterviewsScreen } from './screen/InterviewsScreen';
+import { InterviewDetailsScreen } from './screen/InterviewDetailsScreen';
 
 const stores = { AppStore };
 
@@ -78,6 +79,9 @@ export default class App extends React.Component {
       },
       Interviews: {
         screen: InterviewsScreen,
+      },
+      InterviewDetails: {
+        screen: InterviewDetailsScreen
       },
     }, {
       headerMode: 'float',
