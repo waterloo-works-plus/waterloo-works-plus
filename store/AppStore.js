@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { TermUtil } from '../util/TermUtil';
 
-const BASE_URL = 'https://waterlooworksapi.munazrahman.com';
+const BASE_URL = 'https://waterlooworksplus.munazrahman.com';
 
 const JOB_STATUS_VALUES =
   ['Cancel', 'Expired - Apps Available', 'Filled', 'Posted', 'Sub Posted'];
