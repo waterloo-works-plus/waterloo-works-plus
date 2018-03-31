@@ -108,7 +108,10 @@ export class FilterApplicationsModal extends React.Component {
           </View>
           <View style={styles.buttonsContainer}>
             <TouchableHighlight
-              onPress={() => AppStore.resetAppFilters()}
+              onPress={() => {
+                AppStore.resetAppFilters()
+                onDonePress()
+              }}
               underlayColor={Colors.lightGrey}
               style={styles.buttonContainer}
             >

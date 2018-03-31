@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
@@ -25,9 +25,21 @@ export class MenuScreen extends React.Component {
   onSignOutPress = () => {
     const { AppStore, navigation } = this.props;
 
-    Storage.clearUserCredentials();
-    AppStore.logout();
-    navigation.push('Login');
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {text: 'No', onPress: () => {}, style: 'cancel'},
+        {
+          text: 'Yes', onPress: () => {
+            Storage.clearUserCredentials();
+            AppStore.logout();
+            navigation.push('Login');
+          }
+        },
+      ],
+      { cancelable: false }
+    )
   }
 
   onAboutPress = () => {
