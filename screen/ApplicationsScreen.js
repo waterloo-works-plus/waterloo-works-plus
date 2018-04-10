@@ -181,7 +181,9 @@ export class ApplicationsScreen extends React.Component {
             
             if (application.jobStatus === 'Cancel') {
               jobStatusColor = Colors.red;
-            } else if (application.jobStatus === 'Filled') {
+            } else if (application.jobStatus === 'Filled' ||
+              application.jobStatus === 'Part Filled' ||
+              application.jobStatus === 'Unfilled') {
               jobStatusColor = Colors.grey;
             }
 

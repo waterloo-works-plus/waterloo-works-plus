@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckBox, FlatList, Modal, StyleSheet, Platform,
+import { CheckBox, FlatList, Modal, ScrollView, StyleSheet, Platform,
   Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { inject, observer } from 'mobx-react/native'
@@ -7,9 +7,12 @@ import { inject, observer } from 'mobx-react/native'
 import Colors from '../style/Color';
 import { Accordion } from '../shared/Accordion';
 
-export const JOB_STATUS_VALUES =
-  ['Cancel', 'Expired - Apps Available', 'Filled', 'Posted', 'Sub Posted'];
-export const APP_STATUS_VALUES =
+const JOB_STATUS_VALUES =
+  ['Open for Applications', 'Expired - Apps Available',
+  'Interview Selection Complete', 'Interviews Complete',
+  'Emp Rankings Finalized', 'Filled', 'Unfilled', 'Part Filled', 'Cancel',
+  'Posted', 'Sub Posted'];
+const APP_STATUS_VALUES =
   ['Applied', 'Employed', 'Not Selected', 'Selected for Interview'];
 
 @inject('AppStore')
@@ -38,74 +41,76 @@ export class FilterApplicationsModal extends React.Component {
       >
         <SafeAreaView style={styles.root}>
           <Text style={styles.titleText}>Filter applications</Text>
-          <View style={{ flex: 1 }}>
-            <Accordion header={'Job Status'}>
-              <View style={{ height: 48 * JOB_STATUS_VALUES.length + 6 }}>
-                <FlatList
-                  scrollEnabled={false}
-                  style={styles.list}
-                  data={JOB_STATUS_VALUES}
-                  extraData={jobStatusFilters.length}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index}
-                  renderItem={data => {
-                    const isActive = jobStatusFilters.indexOf(data.item) > -1;
-                    return (
-                      <TouchableHighlight
-                        underlayColor={Colors.grey}
-                        onPress={() => this.onJobStatusPress(data.item)}
-                      >
-                        <View style={styles.filterItemContainer}>
-                          <Text style={styles.filterItemText}>{data.item}</Text>
-                          <Text style={[
-                            styles.filterIcon,
-                            {
-                              color: isActive ? Colors.blue : Colors.grey
-                            }
-                          ]}>
-                            {isActive ? '\uE834' : '\uE835'}
-                          </Text>
-                        </View>
-                      </TouchableHighlight>
-                    )
-                  }}
-                />
-              </View>
-            </Accordion>
-            <Accordion header={'App Status'}>
-              <View style={{ height: 48 * APP_STATUS_VALUES.length + 6 }}>
-                <FlatList
-                  scrollEnabled={false}
-                  style={styles.list}
-                  data={APP_STATUS_VALUES}
-                  extraData={appStatusFilters.length}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index}
-                  renderItem={data => {
-                    const isActive = appStatusFilters.indexOf(data.item) > -1;
-                    return (
-                      <TouchableHighlight
-                        underlayColor={Colors.grey}
-                        onPress={() => this.onAppStatusPress(data.item)}
-                      >
-                        <View style={styles.filterItemContainer}>
-                          <Text style={styles.filterItemText}>{data.item}</Text>
-                          <Text style={[
-                            styles.filterIcon,
-                            {
-                              color: isActive ? Colors.blue : Colors.grey
-                            }
-                          ]}>
-                            {isActive ? '\uE834' : '\uE835'}
-                          </Text>
-                        </View>
-                      </TouchableHighlight>
-                    )
-                  }}
-                />
-              </View>
-            </Accordion>
-          </View>
+          <ScrollView>
+            <View style={{ flex: 1 }}>
+              <Accordion header={'Job Status'}>
+                <View style={{ height: 48 * JOB_STATUS_VALUES.length + 6 }}>
+                  <FlatList
+                    scrollEnabled={false}
+                    style={styles.list}
+                    data={JOB_STATUS_VALUES}
+                    extraData={jobStatusFilters.length}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index}
+                    renderItem={data => {
+                      const isActive = jobStatusFilters.indexOf(data.item) > -1;
+                      return (
+                        <TouchableHighlight
+                          underlayColor={Colors.grey}
+                          onPress={() => this.onJobStatusPress(data.item)}
+                        >
+                          <View style={styles.filterItemContainer}>
+                            <Text style={styles.filterItemText}>{data.item}</Text>
+                            <Text style={[
+                              styles.filterIcon,
+                              {
+                                color: isActive ? Colors.blue : Colors.grey
+                              }
+                            ]}>
+                              {isActive ? '\uE834' : '\uE835'}
+                            </Text>
+                          </View>
+                        </TouchableHighlight>
+                      )
+                    }}
+                  />
+                </View>
+              </Accordion>
+              <Accordion header={'App Status'}>
+                <View style={{ height: 48 * APP_STATUS_VALUES.length + 6 }}>
+                  <FlatList
+                    scrollEnabled={false}
+                    style={styles.list}
+                    data={APP_STATUS_VALUES}
+                    extraData={appStatusFilters.length}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index}
+                    renderItem={data => {
+                      const isActive = appStatusFilters.indexOf(data.item) > -1;
+                      return (
+                        <TouchableHighlight
+                          underlayColor={Colors.grey}
+                          onPress={() => this.onAppStatusPress(data.item)}
+                        >
+                          <View style={styles.filterItemContainer}>
+                            <Text style={styles.filterItemText}>{data.item}</Text>
+                            <Text style={[
+                              styles.filterIcon,
+                              {
+                                color: isActive ? Colors.blue : Colors.grey
+                              }
+                            ]}>
+                              {isActive ? '\uE834' : '\uE835'}
+                            </Text>
+                          </View>
+                        </TouchableHighlight>
+                      )
+                    }}
+                  />
+                </View>
+              </Accordion>
+            </View>
+          </ScrollView>
           <View style={styles.buttonsContainer}>
             <TouchableHighlight
               onPress={() => {
@@ -172,6 +177,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: Colors.blackBorder,
+    backgroundColor: Colors.white,
   },
   buttonContainer: {
     flex: 1,
