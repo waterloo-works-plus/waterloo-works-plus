@@ -17,6 +17,13 @@ export class InterviewDetailsScreen extends React.Component {
 
     return {
       title: params ? params.title : 'Interview',
+      headerStyle: {
+        backgroundColor: Colors.blue,
+      },
+      headerTitleStyle: {
+        color: Colors.white,
+      },
+      headerTintColor: Colors.white,
     };
   };
 

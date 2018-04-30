@@ -17,7 +17,14 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept'
 @observer
 export class InterviewsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Interviews'
+    title: 'Interviews',
+    headerStyle: {
+      backgroundColor: Colors.blue,
+    },
+    headerTitleStyle: {
+      color: Colors.white,
+    },
+    headerTintColor: Colors.white,
   };
 
   componentWillMount() {
@@ -180,7 +187,7 @@ export class InterviewsScreen extends React.Component {
                 <View style={styles.actionsContainer}>
                   <TouchableHighlight
                     onPress={() => this.onJobPress(interview)}
-                    underlayColor={Colors.lightGrey}
+                    underlayColor={Colors.grey}
                   >
                     <View style={styles.actionContainer}>
                       <Text style={styles.actionText}>VIEW JOB</Text>
@@ -189,7 +196,7 @@ export class InterviewsScreen extends React.Component {
                   <TouchableHighlight
                     style={{ marginLeft: 8 }}
                     onPress={() => this.onInterviewsPress(interview)}
-                    underlayColor={Colors.lightGrey}
+                    underlayColor={Colors.grey}
                   >
                     <View style={styles.actionContainer}>
                       <Text style={styles.actionText}>VIEW INTERVIEW</Text>
@@ -267,13 +274,23 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     height: 36,
+    width: 110,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.blue,
+    borderRadius: 4,
+    elevation: 1,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
   },
   actionText: {
-    paddingHorizontal: 8,
-    fontSize: 14,
-    color: Colors.blue,
+    fontSize: 12,
+    color: Colors.white,
     fontFamily: 'roboto-medium',
   },
   loadingContainer: {

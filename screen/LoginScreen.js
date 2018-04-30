@@ -23,6 +23,13 @@ export class LoginScreen extends React.Component {
   static navigationOptions = {
     title: 'Login',
     headerLeft: null,
+    headerStyle: {
+      backgroundColor: Colors.blue,
+    },
+    headerTitleStyle: {
+      color: Colors.white,
+    },
+    headerTintColor: Colors.white,
   };
 
   componentWillMount() {
@@ -65,7 +72,10 @@ export class LoginScreen extends React.Component {
     return (
       <SafeAreaView style={styles.root}>
         <View style={styles.main}>
-          <Text style={styles.title}>Waterloo Works Plus</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>WaterlooWorks</Text>
+            <Text style={[styles.title, { fontFamily: 'roboto-bold'}]}>Plus</Text>
+          </View>
           <TextInput
             style={[
               styles.textInput,
@@ -149,11 +159,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   title: {
-    fontSize: 32,
-    paddingVertical: 24,
+    fontSize: 42,
     textAlign: 'center',
     color: Colors.blue,
-    fontFamily: 'roboto-medium',
+    fontFamily: 'roboto-regular',
+  },
+  titleContainer: {
+    paddingVertical: 24,
   },
   textInput: {
     marginBottom: 16,

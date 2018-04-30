@@ -17,6 +17,13 @@ export class JobScreen extends React.Component {
 
     return {
       title: params ? params.title : 'Job',
+      headerStyle: {
+        backgroundColor: Colors.blue,
+      },
+      headerTitleStyle: {
+        color: Colors.white,
+      },
+      headerTintColor: Colors.white,
     };
   };
 

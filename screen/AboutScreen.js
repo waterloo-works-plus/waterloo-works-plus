@@ -8,6 +8,13 @@ import Colors from '../style/Color';
 export class AboutScreen extends React.Component {
   static navigationOptions = {
     title: 'About',
+    headerStyle: {
+      backgroundColor: Colors.blue,
+    },
+    headerTitleStyle: {
+      color: Colors.white,
+    },
+    headerTintColor: Colors.white,
   };
 
   handleClick = (url) => {
@@ -54,6 +61,18 @@ export class AboutScreen extends React.Component {
               onPress={() => this.handleClick('https://github.com/santanu23')}
             >
               <Text style={styles.linkText}>Santanu Sarker</Text>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              underlayColor={'transparent'}
+              onPress={() => this.handleClick('https://github.com/mbkauser')}
+            >
+              <Text style={styles.linkText}>Mubasshira Kauser</Text>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              underlayColor={'transparent'}
+              onPress={() => this.handleClick('https://github.com/LupenTiJay')}
+            >
+              <Text style={styles.linkText}>Jayant Tiwari</Text>
             </TouchableHighlight>
           </View>
         </ScrollView>

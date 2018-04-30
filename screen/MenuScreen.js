@@ -1,8 +1,9 @@
 import React from 'react';
-import { Alert, Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
+import { Expo } from 'expo'
 
 import { Storage } from '../data/Storage';
 
@@ -12,8 +13,8 @@ import Colors from '../style/Color';
 @observer
 export class MenuScreen extends React.Component {
   static navigationOptions = {
-    title: 'Waterloo Works Plus',
     headerLeft: null,
+    header: null,
   };
 
   onApplicationsPress = () => {
@@ -59,11 +60,11 @@ export class MenuScreen extends React.Component {
       <TouchableHighlight
         underlayColor={Colors.grey}
         onPress={onPress}
+        style={styles.buttonContainer}
       >
         <View style={styles.button}>
-          <Text style={styles.menuIcon}>{icon}</Text>
+          <Image style={styles.icon} source={icon} />
           <Text style={styles.buttonText}>{text}</Text>
-          <Text style={styles.rightArrow}>{'\uE315'}</Text>
         </View>
       </TouchableHighlight>
     )
@@ -72,55 +73,114 @@ export class MenuScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.root}>
-        <ScrollView style={styles.main}>
-          {
-            this.renderMenuItem('\uE873', 'Applications', this.onApplicationsPress)
-          }
-          {
-            this.renderMenuItem('\uE878', 'Interviews', this.onInterviewsPress)
-          }
-          {
-            this.renderMenuItem('\uE88E', 'About', this.onAboutPress)
-          }
-          {
-            this.renderMenuItem('\uE879', 'Logout', this.onSignOutPress)
-          }
-        </ScrollView>
+        <View style={styles.main}>
+          <View style={styles.background}>
+            <View style={styles.backgroundBlue}/>
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>WaterlooWorks</Text>
+            <Text style={styles.titleSubText}>Plus</Text>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              {
+                this.renderMenuItem(require('../assets/applications.png'), 'Applications', this.onApplicationsPress)
+              }
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', }}>
+              {
+                this.renderMenuItem(require('../assets/interviews.png'), 'Interviews', this.onInterviewsPress)
+              }
+            </View>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              {
+                this.renderMenuItem(require('../assets/about.png'), 'About', this.onAboutPress)
+              }
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', }}>
+              {
+                this.renderMenuItem(require('../assets/logout.png'), 'Logout', this.onSignOutPress)
+              }
+            </View>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }
 }
+
+const { width: deviceWidth, height: deviceHeight } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
   },
   main: {
-    paddingVertical: 8,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  background: {
+    position: 'absolute',
+    flex: 1,
+    width: deviceWidth,
+    height: deviceHeight,
+  },
+  backgroundBlue: {
+    backgroundColor: Colors.blue,
+    height: deviceHeight * 0.35,
+  },
+  titleContainer: {
+    position: 'absolute',
+    top: 50,
+  },
+  titleText: {
+    fontFamily: 'roboto-regular',
+    fontSize: 42,
+    color: Colors.white,
+    textAlign: 'center',
+  },
+  titleSubText: {
+    fontFamily: 'roboto-bold',
+    fontSize: 42,
+    color: Colors.white,
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    width: 300,
+    marginBottom: 32,
+  },
+  buttonContainer: {
+    height: 120,
+    width: 120,
+    elevation: 1,
     backgroundColor: Colors.white,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    borderRadius: 4,
   },
   button: {
-    height: 56,
+    height: 120,
+    width: 120,
     alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    backgroundColor: Colors.white,
+    justifyContent: 'center',
   },
   buttonText: {
     fontFamily: 'roboto-regular',
-    flex: 1,
-    fontSize: 18,
+    marginTop: 8,
+    fontSize: 14,
     color: Colors.veryDarkGrey,
   },
-  rightArrow: {
-    fontFamily: 'material-icons',
-    fontSize: 24,
-    color: Colors.grey,
-  },
-  menuIcon: {
-    fontFamily: 'material-icons',
-    fontSize: 32,
-    width: 72,
-    color: Colors.grey,
+  icon: {
+    width: 64,
+    height: 64,
   }
 });

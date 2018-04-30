@@ -13,6 +13,13 @@ import Colors from '../style/Color';
 export class TermSelectScreen extends React.Component {
   static navigationOptions = {
     title: 'Applications',
+    headerStyle: {
+      backgroundColor: Colors.blue,
+    },
+    headerTitleStyle: {
+      color: Colors.white,
+    },
+    headerTintColor: Colors.white,
   };
 
   onCurrentJobSearchTermPress = () => {
@@ -36,15 +43,18 @@ export class TermSelectScreen extends React.Component {
   renderTermItem = (title, subtitle, onPress) => {
     return (
       <TouchableHighlight
-        underlayColor={Colors.grey}
+        underlayColor={Colors.lightGrey}
         onPress={onPress}
+        style={styles.buttonContainer}
       >
         <View style={styles.button}>
           <View style={styles.buttonTextContainer}>
             <Text style={styles.buttonText}>{title}</Text>
             <Text style={styles.buttonSmallText}>{subtitle}</Text>
           </View>
-          <Text style={styles.rightArrow}>{'\uE315'}</Text>
+          <View style={styles.arrowContainer}>
+            <Text style={styles.rightArrow}>{'\uE315'}</Text>
+          </View>
         </View>
       </TouchableHighlight>
     )
@@ -97,15 +107,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    paddingVertical: 8,
-    backgroundColor: Colors.white,
+    paddingVertical: 16,
   },
   button: {
-    height: 72,
-    alignItems: 'center',
-    backgroundColor: Colors.white,
+    flex: 1,
     paddingHorizontal: 16,
+    alignItems: 'center',
     flexDirection: 'row',
+  },
+  buttonContainer: {
+    height: 72,
+    marginBottom: 16,
+    marginHorizontal: 16,
+    backgroundColor: Colors.white,
+    elevation: 1,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
   },
   buttonTextContainer: {
     flex: 1,
@@ -121,9 +143,25 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: Colors.grey,
   },
+  arrowContainer: {
+    backgroundColor: Colors.blue,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 1,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+  },
   rightArrow: {
     fontFamily: 'material-icons',
     fontSize: 24,
-    color: Colors.grey,
+    color: Colors.white,
   },
 });
