@@ -307,7 +307,6 @@ const styles = StyleSheet.create({
   },
   activityContainer: {
     flex: 1,
-    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },

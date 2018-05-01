@@ -2,13 +2,13 @@ export class TermUtil {
 
   static getCurrentJobSearchTerm = () => {
     const now = new Date();
-    const term = 411 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
+    const term = 411 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth()) / 4);
     return term.toString();
   }
 
   static getCurrentWorkTerm = () => {
     const now = new Date();
-    const term = 410 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
+    const term = 410 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth()) / 4);
     return term.toString();
   }
 

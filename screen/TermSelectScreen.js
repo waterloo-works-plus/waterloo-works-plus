@@ -62,7 +62,7 @@ export class TermSelectScreen extends React.Component {
 
   render() {
     const now = new Date();
-    const currentTerm = Math.floor((now.getMonth() - 1) / 4);
+    const currentTerm = Math.floor((now.getMonth()) / 4);
     const year = now.getFullYear();
 
     let currentJobSearchTerm = '';

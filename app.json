@@ -19,6 +19,6 @@
       "backgroundColor": "#ffffff",
       "resizeMode": "contain"
     },
-    "icon": "./assets/wwlogo.png"
+    "icon": "./assets/wwlogo-ios.png"
   }
 }

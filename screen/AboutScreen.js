@@ -29,7 +29,7 @@ export class AboutScreen extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={styles.root}>
-          <Text style={styles.title}>About Waterloo Works Plus</Text>
+          <Text style={styles.title}>About WaterlooWorks Plus</Text>
           <View style={styles.groupContainer}>
             <Text style={styles.questionText}>What is this app?</Text>
             <Text style={styles.answerText}>Waterloo Works Plus is aimed to help you view your applications, jobs and interviews on the go.</Text>

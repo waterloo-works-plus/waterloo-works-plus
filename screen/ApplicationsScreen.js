@@ -405,7 +405,6 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
