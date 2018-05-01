@@ -2,21 +2,21 @@
   "expo": {
     "name": "WW+",
     "sdkVersion": "25.0.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "slug": "waterloo-works-plus",
     "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.munazrahman.waterlooworksplus",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.3"
     },
     "android": {
       "package": "com.munazrahman.waterlooworksplus",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": []
     },
     "splash": {
       "image": "./assets/splash2.png",
-      "backgroundColor": "#fff",
+      "backgroundColor": "#ffffff",
       "resizeMode": "contain"
     },
     "icon": "./assets/wwlogo.png"
