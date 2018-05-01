@@ -15,7 +15,7 @@
       "permissions": []
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "backgroundColor": "#fff",
       "resizeMode": "contain"
     },

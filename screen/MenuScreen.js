@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, Dimensions, Image, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react/native'
@@ -14,7 +14,11 @@ import Colors from '../style/Color';
 export class MenuScreen extends React.Component {
   static navigationOptions = {
     headerLeft: null,
-    header: null,
+    header: Platform.OS === 'ios' ? undefined : null,
+    headerStyle: {
+      backgroundColor: Colors.blue,
+      borderBottomWidth: 0,
+    }
   };
 
   onApplicationsPress = () => {
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    top: 50,
+    top: Platform.OS === 'ios' ? 25 : 50,
   },
   titleText: {
     fontFamily: 'roboto-regular',
