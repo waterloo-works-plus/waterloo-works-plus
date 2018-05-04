@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   title: {
-    fontSize: 42,
+    fontSize: 38,
     textAlign: 'center',
     color: Colors.blue,
     fontFamily: 'roboto-regular',

@@ -7,7 +7,8 @@
     "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.munazrahman.waterlooworksplus",
-      "buildNumber": "1.0.3"
+      "buildNumber": "1.0.4",
+      "supportsTablet": true
     },
     "android": {
       "package": "com.munazrahman.waterlooworksplus",
