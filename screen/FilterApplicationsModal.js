@@ -9,7 +9,7 @@ import { Accordion } from '../shared/Accordion';
 
 const JOB_STATUS_VALUES =
   ['Open for Applications', 'Expired - Apps Available',
-  'Interview Selection Complete', 'Interviews Complete',
+  'Interview Selections Complete', 'Interviews Complete',
   'Emp Rankings Finalized', 'Filled', 'Unfilled', 'Part Filled', 'Cancel',
   'Posted', 'Sub Posted'];
 const APP_STATUS_VALUES =
